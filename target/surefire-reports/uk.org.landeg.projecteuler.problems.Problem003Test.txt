@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: uk.org.landeg.projecteuler.problems.Problem003Test
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.121 sec <<< FAILURE! - in uk.org.landeg.projecteuler.problems.Problem003Test
+assertCorrectSolution(uk.org.landeg.projecteuler.problems.Problem003Test)  Time elapsed: 0.046 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at uk.org.landeg.projecteuler.problems.Problem003.solve(Problem003.java:36)
+	at uk.org.landeg.projecteuler.problems.Problem003Test.assertCorrectSolution(Problem003Test.java:10)
+
