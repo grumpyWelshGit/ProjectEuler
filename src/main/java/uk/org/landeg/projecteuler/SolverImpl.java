@@ -1,6 +1,7 @@
 package uk.org.landeg.projecteuler;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.PostConstruct;
 
@@ -17,8 +18,15 @@ public class SolverImpl implements Solver {
 
 	@PostConstruct
 	public void doSomeShit () {
+		AtomicBoolean solveUniqe = new AtomicBoolean(false);
+		for (ProblemDescription<?> description : problemDescriptions) {
+			if (description.getClass().isAnnotationPresent(UniqueSolution.class)) {
+				solveUniqe.set(true);
+			}
+		}
 		problemDescriptions
 			.stream()
+			.filter(description -> !solveUniqe.get() || description.getClass().isAnnotationPresent(UniqueSolution.class))
 			.map(description -> solve(description))
 			.forEach(solution -> {
 				System.out.println(solution.getDescription().getDescribtion());

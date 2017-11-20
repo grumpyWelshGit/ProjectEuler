@@ -154,4 +154,137 @@ public class Mathlib {
 		}
 		return sum;
 	}
+	
+	public static int[] digits (final int n) {
+		final int max[] = new int [20];
+		int val = n;
+		int idx = 0;
+		do {
+			max[idx] = val % 10;
+			val /= 10;
+			idx++;
+		} while (val > 0);
+		idx--;
+		final int digits[] = new int[idx+1];
+		do {
+			digits[digits.length - idx -1] = max[idx];
+		} while (idx-- > 0);
+		return digits;
+	}
+	
+	public static int[] digitFrequency (final int n) {
+		final int digits[] = new int[10];
+		int currentN = n;
+		do {
+			digits[currentN % 10]++;
+			currentN /= 10;
+		} while (currentN > 0);
+		return digits;
+	}
+
+	public static int[] digitFrequency (final long n) {
+		final int digits[] = new int[10];
+		long currentN = n;
+		do {
+			digits[(int) (currentN % 10)]++;
+			currentN /= 10;
+		} while (currentN > 0);
+		return digits;
+	}
+	
+	public static int length (final int n) {
+		if (n < 10) {return 1;}
+		if (n < 100) {return 2;}
+		if (n < 1000) {return 3;}
+		if (n < 10000) {return 4;}
+		if (n < 100000) {return 5;}
+		if (n < 1000000) {return 6;}
+		if (n < 10000000) {return 7;}
+		if (n < 100000000) {return 8;}
+		if (n < 1000000000) {return 9;}
+		else throw new IllegalArgumentException("Number n is out of range");
+	}
+	
+	public static int truncateLeft (final int n) {
+		return n / 10;
+	}
+	
+	public static int truncateRight (final int n) {
+		int truncated = 0;
+		int multiplier = 1;
+		int value = n;
+		
+		do {
+			truncated += multiplier * (value % 10);
+			value /= 10;
+			multiplier *= 10;
+		} while (value > 9);
+		
+		return truncated;
+	}
+	
+	public static int powi (final int base, final int power) {
+		int pow = power;
+		int result = base;
+		for (int p = 1; p < pow ; p++) {
+			result *= base;
+		}
+		return result;
+	}
+
+	public static int concatinate (final int n, final int m) {
+		int concatinated = n;
+		concatinated *= powi (10, (int) Math.log10(m) + 1);
+		concatinated += m;
+		return concatinated;
+	}
+	
+	
+	public static boolean isPandigital (
+			final int start, 
+			final int n, 
+			final int base) {
+		final int[] digits = digitFrequency(n);
+		return isPandigital(digits, start, base);
+	}
+
+	public static boolean isPandigital (final int n, final int base) {
+		final int[] digits = digitFrequency(n);
+		return isPandigital(digits, base);
+	}
+
+	public static boolean isPandigital (final int[] digits, final int start, final int base) {
+		if (start == 1) {
+			if (digits[0] > 0) {
+				return false;
+			}
+		}
+		for (int d = 1 ; d <= base ; d++) {
+			if (digits[d] != 1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static boolean isPandigital (final int[] digits, final int base) {
+		return isPandigital(digits, 1, base);
+	}
+	
+	public static boolean isPandigital (Iterable<Integer> numbers, int base) {
+		final int[] combinedDigits = new int [10];
+		for (int n : numbers) {
+			final int[] digits = digitFrequency(n);
+			for (int idx = 0 ; idx < combinedDigits.length ; idx++) {
+				combinedDigits[idx] += digits[idx];
+			}
+		}
+		return isPandigital(combinedDigits, base);
+	}
+	
+	public static int replaceDigit (int n, int order, int newval) {
+		int sub = n / Mathlib.powi(10, order + 1) % 10 * Mathlib.powi(10, order);
+		return n - sub + newval * Mathlib.powi(10, order);
+	}
+
 }

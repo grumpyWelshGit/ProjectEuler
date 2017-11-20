@@ -102,4 +102,38 @@ public class MathLibTest {
 		System.out.println(divisors);
 		System.out.println(Mathlib.sum(divisors));
 	}
+	
+	@Test
+	public void assertNumericDigits () {
+		Assert.assertArrayEquals(new int[] {1,2,3,4,5}, Mathlib.digits(12345));
+	}
+	
+	@Test
+	public void assertDigitFrequencyAsExpected () {
+		Assert.assertArrayEquals(new int[] {1,1,1,1,1,1,0,0,0,0}, Mathlib.digitFrequency(123450));
+	}
+	
+	@Test
+	public void assertTruncateRightAsExpected () {
+		Assert.assertEquals(12345, Mathlib.truncateRight(112345));
+		Assert.assertEquals(1, Mathlib.truncateRight(11));
+		Assert.assertEquals(1, Mathlib.truncateRight(1));
+	}
+	
+	@Test
+	public void assertIntegerConcatination () {
+		Assert.assertEquals(1234, Mathlib.concatinate(12, 34));
+	}
+	
+	@Test
+	public void assertPowiAsExpected () {
+		Assert.assertEquals(10, Mathlib.powi(10, 1));
+		Assert.assertEquals(100, Mathlib.powi(10, 2));
+		Assert.assertEquals(100000, Mathlib.powi(10, 5));
+	}
+
+	@Test
+	public void assertReplaceDigit () {
+		Assert.assertEquals(12345, Mathlib.replaceDigit(12245, 2, 3));
+	}
 }
