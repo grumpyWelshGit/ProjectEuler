@@ -123,6 +123,8 @@ public class MathLibTest {
 	@Test
 	public void assertIntegerConcatination () {
 		Assert.assertEquals(1234, Mathlib.concatinate(12, 34));
+		Assert.assertEquals(37, Mathlib.concatinate(3, 7));
+		Assert.assertEquals(73, Mathlib.concatinate(7, 3));
 	}
 	
 	@Test

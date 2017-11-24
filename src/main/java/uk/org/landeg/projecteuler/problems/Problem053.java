@@ -9,11 +9,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import uk.org.landeg.projecteuler.ProblemDescription;
-import uk.org.landeg.projecteuler.UniqueSolution;
 
 @Component
 @Order(53)
-@UniqueSolution
 public class Problem053 implements ProblemDescription<Integer>{
 	private static final Logger LOG = LoggerFactory.getLogger(Problem053.class);
 	@Override

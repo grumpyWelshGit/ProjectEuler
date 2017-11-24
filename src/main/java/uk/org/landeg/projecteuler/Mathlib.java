@@ -38,6 +38,24 @@ public class Mathlib {
 		
 		return isPalindrome;
 	}
+
+	public static boolean isPalindrome (final long candidate) {
+		final List<Integer> digits = new ArrayList<>();
+		long value = candidate;
+		do {
+			digits.add((int)(value % 10));
+			value /= 10;
+		} while (value > 0);
+		
+		boolean isPalindrome = true;
+		for (int idx  = 0 ; idx < digits.size() / 2 + 1; idx++) {
+			if (digits.get(idx) != digits.get(digits.size() - idx -1)) {
+				isPalindrome = false;
+			}
+		}
+		
+		return isPalindrome;
+	}
 	
 	public static int obtainNumberLength (final int value) {
 		int len = 0;
