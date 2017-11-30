@@ -34,7 +34,7 @@ public class Problem043 implements ProblemDescription<Long> {
 			final int[] digits = generator.next();
 			
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("checking {}", Arrays.toString(digits));
+				LOG.trace("checking {}", Arrays.toString(digits));
 			}
 			if (digits[3] % 2 == 0) {
 				if ((digits[2] + digits[3] + digits[4]) % 3 == 0) {
@@ -59,11 +59,5 @@ public class Problem043 implements ProblemDescription<Long> {
 		} 
 
 		return result;
-	}
-	public static void main (String args[]) {
-		final long start = System.nanoTime();
-		System.out.println(new Problem043().solve());
-		final long end = System.nanoTime();
-		System.out.println("solved in " + (end - start) / 1000 / 1000 + "ms");
 	}
 }

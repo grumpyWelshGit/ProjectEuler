@@ -13,7 +13,7 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Component
 @Order(58)
 public class Problem058 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem057.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Problem058.class);
 
 	@Override
 	public String getTask() {
@@ -42,18 +42,18 @@ public class Problem058 implements ProblemDescription<Long>{
 			totalCount += 4;
 			if (isPrime(nsq - n2, primes)) {
 				primeCount++;
-				LOG.debug("diagonal value {} is prime", (nsq - n2));
+				LOG.trace("diagonal value {} is prime", (nsq - n2));
 			}
 			if (isPrime(nsq - 2 * n2, primes)) {
-				LOG.debug("diagonal value {} is prime", (nsq - 2 * n2));
+				LOG.trace("diagonal value {} is prime", (nsq - 2 * n2));
 				primeCount++;
 			}
 			if (isPrime(nsq - 3 * n2, primes)) {
-				LOG.debug("diagonal value {} is prime", (nsq - 3 * n2));
+				LOG.trace("diagonal value {} is prime", (nsq - 3 * n2));
 				primeCount++;
 			}
 			ratio = (float) primeCount / (float) totalCount;
-			LOG.debug("n {} ratio is currently {} ", n, ratio);
+			LOG.trace("n {} ratio is currently {} ", n, ratio);
 			n++;
 		} while (ratio >= 0.1);
 		return (2 * n -1);

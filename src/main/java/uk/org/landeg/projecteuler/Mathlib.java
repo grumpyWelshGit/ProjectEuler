@@ -252,7 +252,7 @@ public class Mathlib {
 
 	public static int concatinate (final int n, final int m) {
 		int concatinated = n;
-		concatinated *= powi (10, (int) Math.log10(m) + 1);
+		concatinated *= powi (10, length(m));
 		concatinated += m;
 		return concatinated;
 	}

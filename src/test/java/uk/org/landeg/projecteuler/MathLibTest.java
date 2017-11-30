@@ -10,11 +10,15 @@ public class MathLibTest {
 	@Test
 	public void assertNumericLength () {
 		Assert.assertEquals(1, Mathlib.obtainNumberLength(1));
+		Assert.assertEquals(1, Mathlib.obtainNumberLength(0001));
 		Assert.assertEquals(1, Mathlib.obtainNumberLength(9));
 		Assert.assertEquals(2, Mathlib.obtainNumberLength(11));
 		Assert.assertEquals(2, Mathlib.obtainNumberLength(99));
 		Assert.assertEquals(6, Mathlib.obtainNumberLength(111111));
 		Assert.assertEquals(6, Mathlib.obtainNumberLength(999999));
+		Assert.assertEquals(8, Mathlib.obtainNumberLength(12345678));
+		Assert.assertEquals(9, Mathlib.obtainNumberLength(123456789));
+		Assert.assertEquals(10, Mathlib.obtainNumberLength(1234567890));
 	}
 	
 	@Test

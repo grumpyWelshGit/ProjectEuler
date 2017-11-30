@@ -1,10 +1,12 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.Set;
-import java.util.function.BinaryOperator;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +16,9 @@ import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.PrimeLib;
 import uk.org.landeg.projecteuler.ProblemDescription;
-import uk.org.landeg.projecteuler.UniqueSolution;
 
 @Component
 @Order(60)
-@UniqueSolution
 public class Problem060 implements ProblemDescription<Long>{
 	private static final Logger LOG = LoggerFactory.getLogger(Problem057.class);
 
@@ -36,8 +36,8 @@ public class Problem060 implements ProblemDescription<Long>{
 	}
 	
 	List<Integer> primesList = new ArrayList<>();
-	final List<Integer> primeList1 = new ArrayList<>();
-	final List<Integer> primeList2 = new ArrayList<>();
+	List<Integer> primeList1 = new ArrayList<>();
+	List<Integer> primeList2 = new ArrayList<>();
 	List<Integer> primeListInUse;
 	Set<Integer> allPrimes;
 	
@@ -46,84 +46,133 @@ public class Problem060 implements ProblemDescription<Long>{
 	static final int MAX_CANDIDATE = 10000;
 	static final int MAX_PRIME = MAX_CANDIDATE * MAX_CANDIDATE;
 
-	private void attemptPrimeConcatination (final List<Integer> list, final int primePosition) {
-		LOG.trace("Attempting concatination for the set {}", list);
-		for (int pos = primePosition ; pos < primeListInUse.size() ; pos++ ) {
-			final int prime = primeListInUse.get(pos);
-			if (prime > MAX_CANDIDATE) {
-				return;
-			}
-			boolean concatinates = true;
-			for (int currentPrime : list) {
-				LOG.trace("Testing {} + {} ", list, prime);
-				if (!concatinatesToPrime(currentPrime, prime)) {
-					concatinates = false;
-					break;
-				}
-			}
-			if (list.isEmpty() || concatinates) {
-				list.add(prime);
-				if (list.size() == TARGET_PRIME_COUNT) {
-					LOG.debug("Set discovered {} ({})", list, 0);
-					setsDiscovered.add(new ArrayList<>(list));
-					list.remove(list.size() - 1);
-				}
-				else {
-					attemptPrimeConcatination(list, primePosition + 1);
-					list.remove(list.size() - 1);
-				}
-			}
-		}
-		list.remove(list.size() - 1);
-	}
 
 	private boolean concatinatesToPrime (final int n, final int m) {
-		return (allPrimes.contains(Mathlib.concatinate(n, m)) && allPrimes.contains(Mathlib.concatinate(m, n)));
+		return (isPrime(Mathlib.concatinate(n, m)) && isPrime(Mathlib.concatinate(m, n)));
 	}
 
 	@Override
 	public Long solve() {
-		int lowestSum = Integer.MAX_VALUE;
 		LOG.debug("Generating prime list");
-		allPrimes = PrimeLib.primes(MAX_PRIME);
+		allPrimes = PrimeLib.primes(MAX_CANDIDATE);
 		primesList.addAll(allPrimes);
-		for (Integer p : allPrimes) {
-			
-			if (p == 3) {
-				primeList1.add(p);
-				primeList2.add(p);
-			}
-			final int mod = p % 3;
-			if (mod == 1) {
-				primeList1.add(p);
-			} else {
-				primeList2.add(p);
-			}
-			if (p > 100000) 
-				break;
-		}
-		
 		LOG.debug("Finished Generating prime list");
-		primeListInUse = primeList1;
-		List<Integer> lowestSumSet = null;
-		attemptPrimeConcatination(new ArrayList<>(), 0);
-		for (final List<Integer> set : setsDiscovered) {
-			LOG.debug("Discovered {} ", set);
-			Optional<Integer> sum = set.stream().reduce(new BinaryOperator<Integer>() {
-				
-				@Override
-				public Integer apply(Integer t, Integer u) {
-					return t + u;
+
+		LOG.debug("Segregating primes");
+		primeList1 = primesList
+				.stream()
+				.filter(x -> x != 5)
+				.filter(x -> x % 3 == 1)
+				.collect(Collectors.toList());
+		primeList2 = primesList
+				.stream()
+				.filter(x -> x != 5)
+				.filter(x -> x % 3 == 2)
+				.collect(Collectors.toList());
+		LOG.debug("Finished segregating primes");
+
+//		primesList = primeList1;
+		LOG.debug("Generating concatinable list");
+		final Map<Integer, List<Integer>> contatinatable = new LinkedHashMap<>();
+		for (int n = 1 ; n < primesList.size() ; n++) {
+			final int prime1 = primesList.get(n);
+			if (prime1 > MAX_CANDIDATE) {
+				break;
+			}
+			for (int m = n + 1 ; m < primesList.size() ; m++) {
+				final int prime2 = primesList.get(m);
+				if (prime2 > MAX_CANDIDATE) {
+					break;
 				}
-			});
-			if (sum.isPresent()) {
-				if (sum.get() < lowestSum) {
-				lowestSum = sum.get();
-				lowestSumSet = set;
+				if (concatinatesToPrime(prime1, prime2)) {
+					LOG.trace("discovered {} and {} are concatinatable", prime1,prime2);
+					if (contatinatable.containsKey(prime1)) {
+						contatinatable.get(prime1).add(prime2);
+					}
+					else {
+						final List<Integer> list = new ArrayList<>();
+						list.add(prime2);
+						contatinatable.put(prime1, list);
+					}
 				}
 			}
 		}
-		LOG.info("Lowest sum set {} " , lowestSumSet);
-		return (long)lowestSum;
+		searchConcatination (contatinatable, new ArrayList<Integer>());
+		final AtomicInteger minSumHolder= new AtomicInteger(0);
+		setsDiscovered
+			.stream()
+			.mapToInt(set -> set.stream().reduce(0, Integer::sum))
+			.reduce(Integer::min)
+			.ifPresent(v -> minSumHolder.set(v));
+		LOG.info("Lowest sum set {} " , minSumHolder.get());
+		return (long)minSumHolder.get();
 	}
+
+	private boolean isPrime (final int n) {
+		if (n < MAX_CANDIDATE) {
+			return allPrimes.contains(n);
+		}
+		else if (n > MAX_CANDIDATE * MAX_CANDIDATE) {
+			throw new RuntimeException("Number too big for prime test");
+		}
+		else {
+			final int maxCheck = (int) Math.sqrt(n) + 1;
+			boolean isPrime = true;
+			for (int p : allPrimes) {
+				if (n % p == 0) {
+					isPrime = false;
+					break;
+				}
+				if (p > maxCheck) {
+					break;
+				}
+			}
+			return isPrime;
+		}
+	}
+
+	private void searchConcatination(
+			Map<Integer, List<Integer>> contatinatable, 
+			ArrayList<Integer> arrayList) {
+		boolean continueSearching = false;
+		if (arrayList.size() == TARGET_PRIME_COUNT) {
+			LOG.debug("discovered latest set {} ", arrayList);
+			setsDiscovered.add(new ArrayList<>(arrayList));
+			continueSearching = true;
+		}
+		Integer latestPrime = null;
+		if (arrayList.isEmpty()) {
+			for (Integer firstPrime : contatinatable.keySet()) {
+				arrayList.add(firstPrime);
+				searchConcatination(contatinatable, arrayList);
+				arrayList.remove(firstPrime);
+			}
+		}
+		else {
+			latestPrime = arrayList.get(arrayList.size() - 1);
+		}
+		final List<Integer> primeCandidateList = contatinatable.get(latestPrime);
+		if (primeCandidateList != null) {
+			for (Integer nextPrime : primeCandidateList) {
+				boolean concatinatable = true;
+				for (Integer i : arrayList) {
+					if (!i.equals(latestPrime)) {
+						if (!contatinatable.get(i).contains(nextPrime)) {
+							concatinatable = false;
+							break;
+						}
+					}
+				}
+				if (concatinatable) {
+					arrayList.add(nextPrime);
+					searchConcatination(contatinatable, arrayList);
+					arrayList.remove(nextPrime);
+				}
+			}
+		}
+		if (continueSearching) {
+			arrayList.remove(arrayList.size()-1);
+		}
+	}
+	
 }

@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
-@Order(57)
-public class Problem057 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem057.class);
+@Order(64)
+public class Problem064 implements ProblemDescription<Integer>{
+	private static final Logger LOG = LoggerFactory.getLogger(Problem064.class);
 	@Override
 	public String getTask() {
 		return "In the first one-thousand expansions, how many fractions contain a numerator with more digits than denominator?";
