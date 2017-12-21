@@ -71,7 +71,7 @@ public class Problem061 implements ProblemDescription<Long>{
 			});
 		
 		discoverCyclicSet(null);
-		return 0l;
+		return (long)result;
 	}
 	
 	private void discoverCyclicSet (final List<PolyNumber> set) {
@@ -82,11 +82,13 @@ public class Problem061 implements ProblemDescription<Long>{
 		}
 		if (set.size() == 6) {
 			int sum = set.stream().mapToInt(PolyNumber::getValue).sum();
-			result = sum;
+			
 			if (set.get(set.size() - 1).endsWith == set.get(0).startsWith) {
 				LOG.debug("Set discovered [{}] {}", sum, set);
+				result = sum;
+				return;
 			}
-			return;
+			
 		}
 		if (set.isEmpty()) {
 			for (PolyNumber poly : numbers) {

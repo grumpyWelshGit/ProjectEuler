@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,6 +30,8 @@ public class SolverImpl implements Solver {
 			.filter(description -> !solveUniqe.get() || description.getClass().isAnnotationPresent(UniqueSolution.class))
 			.map(description -> solve(description))
 			.forEach(solution -> {
+				final int id = solution.getDescription().getClass().getAnnotation(Order.class).value();
+				System.out.println(String.format("====== Problem %d ======", id));
 				System.out.println(solution.getDescription().getDescribtion());
 				System.out.println(solution.getDescription().getTask());
 				long solutionTimeMillis = solution.getEndTime() - solution.getStartTime();

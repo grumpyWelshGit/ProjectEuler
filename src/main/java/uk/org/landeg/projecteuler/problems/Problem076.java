@@ -1,6 +1,11 @@
 package uk.org.landeg.projecteuler.problems;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,13 +13,16 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import uk.org.landeg.projecteuler.ProblemDescription;
-import uk.org.landeg.projecteuler.UniqueSolution;
 
 @Component
 @Order(76)
-@UniqueSolution
-public class Problem076 implements ProblemDescription<Integer>{
+public class Problem076 implements ProblemDescription<Long>{
+
 	private static final Logger LOG = LoggerFactory.getLogger(Problem076.class);
+	private static final int TARGET = 100;
+	AtomicLong combinationCount = new AtomicLong();
+	final Map<Integer, Integer> partitions = new HashMap<>();
+	
 	@Override
 	public String getTask() {
 		return "How many different ways can one hundred be written as a sum of at least two positive integers?";
@@ -25,40 +33,59 @@ public class Problem076 implements ProblemDescription<Integer>{
 		return " It is possible to write five as a sum in exactly six different ways";
 	}
 
+	private List<Integer> solution = new ArrayList<>();
+
+	private int[][] subPartitions;
 	@Override
-	public Integer solve() {
-		final int target = 100;
-		int count = 0;
-		int[] parts = new int[target];
-		Arrays.fill(parts, 0);
-		parts[0] = target;
-		do {
-			int i;
-			for (i = parts.length - 1 ; i >= 0 ; i--) {
-				if (parts[i] > 1) {
-					parts[i]--;
-					break;
+	public Long solve() {
+		subPartitions = new int[TARGET+1][];
+		subPartitions[1] = new int[] {0,1};
+		for (int target = 2 ; target <= TARGET ; target++) {
+			subPartitions[target] = new int[target + 1];
+			for (int i = 1 ; i < target ; i++) {
+				int diff = target - i;
+				int sum = 0;
+				for (int j = 1 ; j <= i && j< subPartitions[diff].length ; j++) {
+					sum += subPartitions[diff][j];
 				}
+				subPartitions[target][i] = sum;
 			}
-			int sum = 0;
-			for (int j = 0 ; j < parts.length - 1 ; j++) {
-				if (j > i) {
-					parts[j] = 0;
-				}
-				sum += parts[j];
-			}
-			for (int j = i + 1 ; j < parts.length ; j++) {
-				int min = parts[j-1];
-				int next = Math.min(min, target - sum);
-				if (next == 0) {
-					break;
-				}
-				parts[j] = next; 
-				sum += parts[j];
-			}
-			LOG.debug("{}",parts);
+			subPartitions[target][target] = 1;
+			LOG.debug(Arrays.toString(subPartitions[target]));
+		}
+		int sum = 0;
+		for (int p : subPartitions[100]) {
+			sum += p;
+		}
+		
+		return (long)(sum -1);
+	}
+	
+	public void cascadeSolution (final int target) {
+		final int currentSum = (solution.isEmpty()) ? 0 : solution.stream().mapToInt(x->x).sum();
+		if (currentSum == target) {
+			LOG.trace("solution discovered {} ", solution);
+			final int start = solution.get(0);
+			Integer count = partitions.getOrDefault(start, 0);
 			count++;
-		} while (parts[parts.length - 1] == 0);
-		return count;
+			partitions.put(start, count);
+			combinationCount.incrementAndGet();
+			return;
+		}
+		if (currentSum > target) {
+			return;
+		}
+		
+		int diff = target - currentSum;
+		int maxNext = diff;
+		if (!solution.isEmpty()) {
+			maxNext = solution.get(solution.size() - 1);
+		}
+		
+		for (int nexNum = maxNext; nexNum >= 1 ; nexNum--) {
+			solution.add(nexNum);
+			cascadeSolution(target);
+			solution.remove(solution.lastIndexOf(nexNum));
+		}
 	}
 }

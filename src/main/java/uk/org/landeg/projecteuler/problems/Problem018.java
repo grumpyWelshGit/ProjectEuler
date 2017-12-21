@@ -55,7 +55,6 @@ public class Problem018 implements ProblemDescription<Integer>{
 
 	@Override
 	public Integer solve() {
-		LOG.info("Hello world!");
 		numbers = parseNumbers();
 		for (int[] line : numbers) {
 			if (LOG.isDebugEnabled()) {

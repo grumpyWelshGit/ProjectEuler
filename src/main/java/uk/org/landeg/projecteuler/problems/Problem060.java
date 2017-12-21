@@ -20,7 +20,7 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Component
 @Order(60)
 public class Problem060 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem057.class);
+	private static final Logger LOG = LoggerFactory.getLogger(Problem060.class);
 
 	@Override
 	public String getTask() {

@@ -1,7 +1,7 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.util.Arrays;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -12,6 +12,7 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Component
 @Order(11)
 public class Problem011 implements ProblemDescription<Long> {
+	private static final Logger LOG = LoggerFactory.getLogger(Problem011.class);
 	final String[] NUMBER_ARRAY = { 
 			  "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08",
 			  "49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00",
@@ -74,8 +75,7 @@ public class Problem011 implements ProblemDescription<Long> {
 					}
 					if (product > maxProduct) {
 						maxProduct = product;
-						context.getSolution().getNotes().add(String.format("%s : %d", 
-								Arrays.toString(components), product));
+						LOG.debug("{} : {}", components, product);
 					}
 				}
 			}
