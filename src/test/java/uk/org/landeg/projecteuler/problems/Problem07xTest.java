@@ -28,6 +28,14 @@ public class Problem07xTest {
 		Assert.assertEquals(7295372l, new Problem073().solve().longValue());
 	}
 	@Test
+	public void assertProblem74Solution () {
+		Assert.assertEquals(402, new Problem074().solve().longValue());
+	}
+	@Test
+	public void renderChainProblem74 () {
+		new Problem074().showChain(1);
+	}
+	@Test
 	public void assertProblem77Solution () {
 		Assert.assertEquals(71, new Problem077().solve().intValue());
 	}
