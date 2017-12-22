@@ -15,7 +15,7 @@ import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
-@Order(73)
+@Order(74)
 public class Problem074 implements ProblemDescription<Integer>{
 	private static final Logger LOG = LoggerFactory.getLogger(Problem074.class);
 

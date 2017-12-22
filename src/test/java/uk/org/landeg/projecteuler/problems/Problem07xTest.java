@@ -32,8 +32,8 @@ public class Problem07xTest {
 		Assert.assertEquals(402, new Problem074().solve().longValue());
 	}
 	@Test
-	public void renderChainProblem74 () {
-		new Problem074().showChain(1);
+	public void assertProblem75Solution () {
+		Assert.assertEquals(161667, new Problem075().solve().longValue());
 	}
 	@Test
 	public void assertProblem77Solution () {
