@@ -42,38 +42,60 @@ public class Problem074 implements ProblemDescription<Integer>{
 		for (int i = 0 ; i<= 9 ; i++) {
 			factorials[i] = (int) Mathlib.factorial(i);
 		}
-
+		final int[] lengthOfChain = new int[3000000];
+		final int[] fullChainLengths = new int[100];
 		final List<Long> history = new ArrayList<>();
+
 		int count60 = 0;
 		long nn;
-		for (int n = 11 ; n < 1000000 ; n++) {
+		int cachedLen = 0;
+		for (int n = 2 ; n < 1000000 ; n++) {
 			boolean finished = false;
 			nn = n;
 			history.clear();
+			cachedLen = 0;
+			predicted = 0;
 			int len = 1;
 			do {
 				history.add(nn);
 				nn = factorialSum(nn);
-				if (gatherStats) {
-					stats.put(nn, stats.getOrDefault(nn, 0) + 1);
-				}
-				if (history.contains(nn)) {
+				if (lengthOfChain[(int)nn] > 0) {
+					cachedLen = lengthOfChain[(int) nn];
+					len += cachedLen;
 					finished = true;
 				} else {
-					len++;
-				}
-				if (len > 60) {
-					finished = true;
+					if (gatherStats) {
+						stats.put(nn, stats.getOrDefault(nn, 0) + 1);
+					}
+					if (history.contains(nn)) {
+						finished = true;
+					} else {
+						len++;
+					}
 				}
 			} while (!finished);
+			if (lengthOfChain[history.get(0).intValue()] == 0) {
+				for (int i = history.size() - 1 ; i >= 0 ; i--) {
+					lengthOfChain[history.get(i).intValue()] = cachedLen + history.size() - i;
+				}
+			}
+			fullChainLengths[len]++;
+			
 			if (gatherStats) {
 				chainLengths.put(len / 10, chainLengths.getOrDefault(len / 10, 0) + 1);
 			}
+
 			LOG.trace("{} ({}) : {}", n, len, history);
 			if (len == 60) {
 				count60++;
 			}
-
+		}
+		if (LOG.isDebugEnabled()) {
+			for (int i = 0 ; i < fullChainLengths.length ; i++) {
+				if (fullChainLengths[i] > 0) {
+					LOG.debug("{}    : {}", i, fullChainLengths[i]);
+				}
+			}
 		}
 		LOG.info("Numbers with chains of length 60 = {}", count60);
 		if (gatherStats) {
