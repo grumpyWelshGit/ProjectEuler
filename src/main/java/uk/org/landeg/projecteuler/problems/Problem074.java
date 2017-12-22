@@ -54,7 +54,6 @@ public class Problem074 implements ProblemDescription<Integer>{
 			nn = n;
 			history.clear();
 			cachedLen = 0;
-			predicted = 0;
 			int len = 1;
 			do {
 				history.add(nn);
