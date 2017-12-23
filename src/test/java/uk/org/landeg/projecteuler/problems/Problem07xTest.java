@@ -36,7 +36,24 @@ public class Problem07xTest {
 		Assert.assertEquals(161667, new Problem075().solve().longValue());
 	}
 	@Test
+	public void assertProblem76Solution () {
+		Assert.assertEquals(190569291, new Problem076().solve().longValue());
+	}
+	
+	@Test
 	public void assertProblem77Solution () {
 		Assert.assertEquals(71, new Problem077().solve().intValue());
+	}
+
+	@Test
+	public void assertProblem78Solution () {
+		new Problem078().solve();
+		Assert.fail("Not implemented");
+//		Assert.assertEquals(71, new Problem077().solve().intValue());
+	}
+
+	@Test
+	public void assertProblem79Solution () {
+		Assert.assertEquals("73162890", new Problem079().solve());
 	}
 }

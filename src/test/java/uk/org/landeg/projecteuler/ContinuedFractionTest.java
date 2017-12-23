@@ -1,5 +1,6 @@
 package uk.org.landeg.projecteuler;
 
+import java.lang.Thread.State;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,5 +76,16 @@ public class ContinuedFractionTest {
 			cf.add(state.getA());
 		}
 		System.out.println(cf.toString());
+	}
+	
+	@Test
+	public void assertRoot60AsExpected () {
+		ConvergentState s0 = new ConvergentState(50);
+		final List<Long> cf = new ArrayList<>();
+		for (int idx =0  ; idx < 10 ; idx++) {
+			cf.add(s0.getA().longValue());
+			s0 = ContinuedFraction.evaluateNext(s0);
+		}
+		System.out.println(ContinuedFraction.evaluate(cf));
 	}
 }

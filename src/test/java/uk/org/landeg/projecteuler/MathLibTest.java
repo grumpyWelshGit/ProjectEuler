@@ -142,4 +142,10 @@ public class MathLibTest {
 	public void assertReplaceDigit () {
 		Assert.assertEquals(12345, Mathlib.replaceDigit(12245, 2, 3));
 	}
+	
+	@Test
+	public void assertDigitalSumAsExpected () {
+		Assert.assertEquals(6, Mathlib.digitalSum("1230000"));
+		Assert.assertEquals(0, Mathlib.digitalSum("00000"));
+	}
 }

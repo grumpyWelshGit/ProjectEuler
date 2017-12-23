@@ -33,8 +33,6 @@ public class Problem076 implements ProblemDescription<Long>{
 		return " It is possible to write five as a sum in exactly six different ways";
 	}
 
-	private List<Integer> solution = new ArrayList<>();
-
 	private int[][] subPartitions;
 	@Override
 	public Long solve() {
@@ -59,33 +57,5 @@ public class Problem076 implements ProblemDescription<Long>{
 		}
 		
 		return (long)(sum -1);
-	}
-	
-	public void cascadeSolution (final int target) {
-		final int currentSum = (solution.isEmpty()) ? 0 : solution.stream().mapToInt(x->x).sum();
-		if (currentSum == target) {
-			LOG.trace("solution discovered {} ", solution);
-			final int start = solution.get(0);
-			Integer count = partitions.getOrDefault(start, 0);
-			count++;
-			partitions.put(start, count);
-			combinationCount.incrementAndGet();
-			return;
-		}
-		if (currentSum > target) {
-			return;
-		}
-		
-		int diff = target - currentSum;
-		int maxNext = diff;
-		if (!solution.isEmpty()) {
-			maxNext = solution.get(solution.size() - 1);
-		}
-		
-		for (int nexNum = maxNext; nexNum >= 1 ; nexNum--) {
-			solution.add(nexNum);
-			cascadeSolution(target);
-			solution.remove(solution.lastIndexOf(nexNum));
-		}
 	}
 }

@@ -305,4 +305,11 @@ public class Mathlib {
 		return n - sub + newval * Mathlib.powi(10, order);
 	}
 
+	public static long digitalSum (final String nAsString) {
+		long sum = 0;
+		for (int i = 0  ; i < nAsString.length() ; i++) {
+			sum += (int) (nAsString.charAt(i) - '0');
+		}
+		return sum;
+	}
 }

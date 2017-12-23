@@ -1,6 +1,7 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -28,90 +29,57 @@ public class Problem075 implements ProblemDescription<Integer>{
 
 	static final int max = 1500000;
 	private Set<Integer> primes;
-	private final boolean[][] MN_CACHE = new boolean[max][];
+	private Set<Triple> triplesUsed = new HashSet<>();
 			
 	@Override
 	public Integer solve() {
 		final int[] solutionCount = new int [max];
-		primes = PrimeLib.primes(max);
-		final int mMax = (int)(Math.sqrt(max) / 4d);
-		for (int m = 1 ; m < mMax ; m++) {
-			int nMax = (max - 2 * m * m) / 2 / m;
-			MN_CACHE[m] = new boolean[nMax];
-		}
-
-		for (int m = 1 ; m < mMax ; m++) {
-			int nMax = (max - 2 * m * m) / 2 / m;
-			if (m % 1000 == 0)  {
-				LOG.debug("m = {}", m);
+		final int mMax = 1 * (int) Math.sqrt(8l * max) /2;
+		for (int m = 1 ; m <= mMax ; m++) {
+			if (m %  100 == 0) {
+				LOG.info("m {} " , m);
 			}
-			int nStart = 1;
-			int nStep = 1;
-			
-			if (m % 2 == 1) {
-				nStart = 2;
-				nStep = 2;
-			}
-			for (int n = nStart ; n < nMax && n < m; n += nStep) {
+			int nStart = (m % 2 == 0) ? 1 : 2;
+			int nStep = 2;
+			for (int n = nStart ; n < m ; n += nStep) {
+				if (hcf(m,n) != 1) {
+					continue;
+				}
 				final int c = n * n + m * m;
 				final int a = m * m - n * n;
 				final int b = 2 * m * n;
 				final int p = a + b + c;
-				
-				LOG.trace("p : a,b,c = {} {} -> {} : {} {} {}", m,n,p,a,b,c);
-
-				if (MN_CACHE[m][n]) {
-					continue;
-				}
-
-				if (p > max / 2 || p < 0) {
+				if (p > max) {
 					break;
 				}
-
-				int k = 1;
-				int pp = p;
-				
-				int nn = n; int mm = m;
+				boolean finished = false;
+				int k=1;
 				do {
-						MN_CACHE[mm][nn] = true;
-					mm += m;
-					nn += n;
-				} while (mm < MN_CACHE.length - 1 && nn < MN_CACHE[mm].length - 1);
-
-				do {
+					final int pp = k * p;
+					if (pp == 24) {
+						LOG.info("m {} n {} k {} a{} b{} c{}",m,n,k,a,b,c);
+					}
 					if (pp < max) {
-						solutionCount[pp]++;
+						if (triplesUsed.add(new Triple(a*k,b*k,c*k))) {
+							solutionCount[pp]++;
+						}
 						k++;
 					} else {
-						break;
+						finished = true;
 					}
-					LOG.trace("pp a,b,c = {} {} {} {}", pp,a,b,c);
-					if (pp == 120) {
-						if (LOG.isInfoEnabled()) {
-							LOG.info("120 :: pp k,a,b,c = {} {} -> {} {} {} : {} {} {} {} {}", m,n,a,b,c,pp,a*k,b*k,c*k);
-						}
-					}
-					pp += p;
-				} while (pp < max && pp > 0);
+				} while (!finished);
 			}
 		}
-		LOG.info("120 : {}",solutionCount[120]);
-		LOG.info("12 : {}",solutionCount[12]);
-		LOG.info("24 : {}",solutionCount[24]);
-		LOG.info("30 : {}",solutionCount[30]);
-		LOG.info("36 : {}",solutionCount[36]);
-		LOG.info("40 : {}",solutionCount[40]);
-		LOG.info("48 : {}",solutionCount[48]);
+		for (int i : new int[] {12,24,30,36,40,48}) {
+			LOG.info("{} {} ",i , solutionCount[i]);
+		}
 		
-		int count = (int) Arrays.stream(solutionCount).filter(x->x==1).count();
-		LOG.info("single solution values : " + count);
+		final int count = (int) Arrays.stream(solutionCount).filter(x -> x == 1).count();
+		LOG.info("Single solution coujnts {} ", count);
 		return count;
 	}
 	
 	private boolean isCoprime (final int a, int b) {
-		if (a == b || a== 0 || b == 0) {
-			return false;
-		}
 		if (primes.contains(a) && primes.contains(b)) {
 			return true;
 		}
@@ -128,4 +96,64 @@ public class Problem075 implements ProblemDescription<Integer>{
 		}
 		return true;
 	}
+	
+	
+	private int hcf (int a, int b) {
+		int lo = Math.min(a, b);
+		int hi = Math.max(a, b);
+		for (int i = lo ; i >= 1 ; i--) {
+			if (hi % i == 0 && lo % i == 0) {
+				return i;
+			}
+		}
+		return 1;
+	}
+	/**
+	 * @author andy
+	 *
+	 */
+	private class Triple {
+		private final int a;
+		private final int b;
+		private final int c;
+		
+		public Triple(int a, int b, int c) {
+			super();
+			this.a = a;
+			this.b = b;
+			this.c = c;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + a;
+			result = prime * result + b;
+			result = prime * result + c;
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Triple other = (Triple) obj;
+			if (a != other.a)
+				return false;
+			if (b != other.b)
+				return false;
+			if (c != other.c)
+				return false;
+			return true;
+		}
+
+		
+		
+	}
+
 }
