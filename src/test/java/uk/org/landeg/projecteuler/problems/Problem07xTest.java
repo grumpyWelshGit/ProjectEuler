@@ -47,9 +47,7 @@ public class Problem07xTest {
 
 	@Test
 	public void assertProblem78Solution () {
-		new Problem078().solve();
-		Assert.fail("Not implemented");
-//		Assert.assertEquals(71, new Problem077().solve().intValue());
+		Assert.assertEquals(55374, new Problem078().solve().intValue());
 	}
 
 	@Test

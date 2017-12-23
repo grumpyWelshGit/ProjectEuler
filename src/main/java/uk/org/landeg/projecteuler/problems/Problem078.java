@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import uk.org.landeg.projecteuler.MathLibTest;
+import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
@@ -19,7 +21,6 @@ public class Problem078 implements ProblemDescription<Long>{
 
 	private static final Logger LOG = LoggerFactory.getLogger(Problem078.class);
 	AtomicLong combinationCount = new AtomicLong();
-	final Map<Integer, Integer> partitions = new HashMap<>();
 	
 	@Override
 	public String getTask() {
@@ -31,42 +32,37 @@ public class Problem078 implements ProblemDescription<Long>{
 		return " It is possible to write five as a sum in exactly six different ways";
 	}
 
-	private BigInteger[][] subPartitions;
+	private Map<Long, Long> partitions = new HashMap<>(); 
 	@Override
 	public Long solve() {
-		final int target = 100000;
-		
-		subPartitions = new BigInteger[target+1][];
-		subPartitions[1] = new BigInteger[] {BigInteger.ZERO,BigInteger.ONE};
-		for (int currentTarget = 2 ; currentTarget <= target ; currentTarget++) {
-			if (currentTarget % 200 == 0) {
-				LOG.info("Solving for {}", currentTarget);
-			}
-			subPartitions[currentTarget] = new BigInteger[currentTarget + 1];
-			for (int i = 1 ; i < currentTarget ; i++) {
-				int diff = currentTarget - i;
-				BigInteger sum = BigInteger.ZERO;
-				for (int j = 1 ; j <= i && j< subPartitions[diff].length ; j++) {
-					sum = sum.add(subPartitions[diff][j]);
+		long n = 0;
+		partitions.put(n, 1l);
+		partitions.put(++n, 1l);
+		long partition;
+		do {
+			n++;
+			partition = 0;
+			int sign = -1;
+			partitions.put(n, 0l);
+			for (int k = 1 ; k < n ; k++) {
+				sign *= -1;
+				long pk = pentagon(k);
+				long nextTerm = 0;
+				if (partitions.size() > pk) {
+					nextTerm += sign * partitions.getOrDefault(n-pk, 0l);
+					nextTerm += sign * partitions.getOrDefault(n-pk-k, 0l);
 				}
-				subPartitions[currentTarget][i] = sum;
+				partition += nextTerm;
 			}
-			subPartitions[currentTarget][currentTarget] = BigInteger.ONE;
-			LOG.debug(Arrays.toString(subPartitions[currentTarget]));
-			BigInteger sum = BigInteger.ZERO;
-			for (BigInteger p : subPartitions[currentTarget]) {
-				if (p != null) {
-					sum = sum.add(p);
-				}
-			}
-			LOG.debug("{} sum {}", currentTarget, sum);
-			if (sum.compareTo(BigInteger.ZERO) > 0) {
-				if (sum.mod(BigInteger.valueOf(1000000l)) == BigInteger.ZERO) {
-					LOG.info("{} partitions found for {}", sum, target);
-					return ((long) target);
-				}
-			}
-		}
-		return null;
+			partitions.put(n, partition % 1000000);
+		} while (partition % 1000000 != 0);
+		LOG.info("N={}" ,n);
+		return (long)n;
+	}
+	
+	private Map<Integer, Long> P = new HashMap<>();
+	private long pentagon (final int n) {
+		final long p = (long)n * (3l * n - 1l) / 2l;
+		return p;
 	}
 }
