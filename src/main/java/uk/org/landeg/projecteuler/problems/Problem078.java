@@ -31,38 +31,42 @@ public class Problem078 implements ProblemDescription<Long>{
 	public String getDescribtion() {
 		return " It is possible to write five as a sum in exactly six different ways";
 	}
-
-	private Map<Long, Long> partitions = new HashMap<>(); 
+	private static final int pentagonCacheSize = 2000;
+	private final long partitions [] = new long [1000000];
+	private final long pentagonNumbers[] = new long[pentagonCacheSize];
 	@Override
 	public Long solve() {
-		long n = 0;
-		partitions.put(n, 1l);
-		partitions.put(++n, 1l);
-		long partition;
+		int n = 0;
+		partitions[n] = 1;
+		partitions[++n] = 1;
 		do {
 			n++;
-			partition = 0;
 			int sign = -1;
-			partitions.put(n, 0l);
 			for (int k = 1 ; k < n ; k++) {
 				sign *= -1;
 				long pk = pentagon(k);
-				long nextTerm = 0;
-				if (partitions.size() > pk) {
-					nextTerm += sign * partitions.getOrDefault(n-pk, 0l);
-					nextTerm += sign * partitions.getOrDefault(n-pk-k, 0l);
+				if (pk > n) {
+					break;
 				}
-				partition += nextTerm;
+				int nextTermId = n - (int) pk;
+				partitions[n] += (nextTermId >= 0) ? sign * partitions[nextTermId] : 0;
+				nextTermId = n - (int) pk-k;
+				partitions[n] += (nextTermId >= 0) ? sign * partitions[nextTermId] : 0;
 			}
-			partitions.put(n, partition % 1000000);
-		} while (partition % 1000000 != 0);
+			partitions[n] = partitions[n] % 1000000;
+		} while (partitions[n] % 1000000 != 0);
 		LOG.info("N={}" ,n);
 		return (long)n;
 	}
 	
-	private Map<Integer, Long> P = new HashMap<>();
 	private long pentagon (final int n) {
+		if (n < pentagonCacheSize && pentagonNumbers[n] > 0) {
+			return pentagonNumbers[n];
+		} 
 		final long p = (long)n * (3l * n - 1l) / 2l;
+		if (n < pentagonCacheSize) {
+			pentagonNumbers[n] = p;
+		}
 		return p;
 	}
 }
