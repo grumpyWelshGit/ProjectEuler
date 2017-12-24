@@ -2,20 +2,16 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.PrimeLib;
-import uk.org.landeg.projecteuler.ProblemContext;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(12)
 public class Problem012 implements ProblemDescription<Long>{
-	@Autowired
-	private ProblemContext context;
 
 	@Override
 	public String getTask() {

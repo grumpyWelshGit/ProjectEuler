@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import uk.org.landeg.projecteuler.PrimeLib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
@@ -78,25 +77,6 @@ public class Problem075 implements ProblemDescription<Integer>{
 		LOG.info("Single solution coujnts {} ", count);
 		return count;
 	}
-	
-	private boolean isCoprime (final int a, int b) {
-		if (primes.contains(a) && primes.contains(b)) {
-			return true;
-		}
-		int lo = Math.min(a, b);
-		int hi = Math.max(a, b);
-		if (hi % lo == 0) {
-			return false;
-		}
-
-		for (int p : primes) {
-			if (a % p == 0 && b % p == 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
 	
 	private int hcf (int a, int b) {
 		int lo = Math.min(a, b);

@@ -1,12 +1,10 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.math.BigInteger;
-import java.util.Set;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import uk.org.landeg.projecteuler.PrimeLib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
@@ -28,9 +26,6 @@ public class Problem015 implements ProblemDescription<Long>{
 		final int n = 40;
 		final int r = 20;
 
-		final Set<Integer> primes = PrimeLib.primes(40);
-
-		
 		final BigInteger nFact = factorial(n);
 		final BigInteger rFact = factorial(r);
 		final BigInteger nMinusRFact = factorial(n - r);

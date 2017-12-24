@@ -33,7 +33,6 @@ public class Problem079 implements ProblemDescription<String>{
 	public String solve() {
 		final StringBuilder resultBuilder = new StringBuilder();
 		final List<String> lines = FileLoader.readLines("p079_keylog.txt");
-		final Map<Character, Integer> scores = new LinkedHashMap();
 		int[] digitScores = new int[10];
 		final List<Integer[]> intLines = new ArrayList<>();
 		final Set<Integer> usedDigits = new HashSet<>();

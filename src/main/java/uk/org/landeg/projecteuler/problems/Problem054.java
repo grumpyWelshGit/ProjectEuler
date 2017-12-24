@@ -42,7 +42,12 @@ public class Problem054 implements ProblemDescription<Integer>{
 		private WinType (final int score) {
 			this.score = score;
 		}
+		
 		private final int score;
+		
+		public int getScore() {
+			return score;
+		}
 	}
 
 	private static final Map<Character, Integer> RANKS = new HashMap<>();
@@ -117,7 +122,6 @@ public class Problem054 implements ProblemDescription<Integer>{
 
 	private void checkHand (final Hand hand) {
 		Collections.sort(hand.getCards());
-		List<Integer> wins = new ArrayList<>();
 		final Map<Integer, Integer> rankFreq = new HashMap<>();
 		final Map<Integer, Integer> suitFreq = new HashMap<>();
 		for (Card card : hand.getCards()) {

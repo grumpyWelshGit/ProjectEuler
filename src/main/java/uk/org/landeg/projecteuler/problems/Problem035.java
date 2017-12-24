@@ -1,6 +1,5 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.core.annotation.Order;
@@ -28,7 +27,6 @@ public class Problem035 implements ProblemDescription<Integer>{
 		final int max = 1000000;
 		int count = 0;
 		final Set<Integer> primes = PrimeLib.primes(max);
-		final Set<Integer> circularPrimes = new HashSet<>();
 		for (final int idx : primes) {
 			int factor = 1;
 			int rotations = 0;

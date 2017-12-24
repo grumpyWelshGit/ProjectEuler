@@ -30,7 +30,6 @@ public class Problem074 implements ProblemDescription<Integer>{
 	}
 
 	private static final Map<Long, Integer> stats = new TreeMap<>();
-	private static final Map<Long, Integer> knownChainSize = new HashMap<>();
 	private static final Map<Integer, Integer> chainLengths = new HashMap<>();
 	private static final boolean gatherStats = false;
 
@@ -140,9 +139,5 @@ public class Problem074 implements ProblemDescription<Integer>{
 			FS_CACHE.put(n, sum);
 		}
 		return sum;
-	}
-	
-	public void showCombinations () {
-		final int f[] = {1,1,2,3,6,24,120,720,5040,40320,362880};
 	}
 }

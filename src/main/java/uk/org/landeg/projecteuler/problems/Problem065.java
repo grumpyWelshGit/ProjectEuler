@@ -32,7 +32,6 @@ public class Problem065 implements ProblemDescription<Integer>{
 		int result = 0;
 		BigInteger n = null; 
 		BigInteger d = null;
-		final StringBuilder builder = new StringBuilder ();
 		final List<Integer> terms = new ArrayList<>();
 		
 		for (int idx = 0 ; idx <= 100 ; idx++) {
@@ -61,12 +60,6 @@ public class Problem065 implements ProblemDescription<Integer>{
 		} while (n.compareTo(BigInteger.ONE) > 0);
 		return result;
 	}
-	
-	private boolean isPerfectSquare(int root) {
-		final int sqrt = (int) Math.sqrt(root);
-		return sqrt * sqrt == root;
-	}
-
 	
 	final Iterator<Integer> continuedFractionGenerator = new Iterator<Integer>() {
 		int n = 0;

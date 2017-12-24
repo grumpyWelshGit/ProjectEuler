@@ -1,6 +1,5 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.springframework.core.annotation.Order;
@@ -31,7 +30,6 @@ public class Problem019 implements ProblemDescription<Integer>{
 
 	@Override
 	public Integer solve() {
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 		final Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 1901);
 		cal.set(Calendar.MONTH, Calendar.JANUARY);

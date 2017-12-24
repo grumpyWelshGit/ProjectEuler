@@ -14,12 +14,14 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 public class Problem018 implements ProblemDescription<Integer>{
 	private static final Logger LOG = LoggerFactory.getLogger(Problem018.class);
 
+	/**
 	private static final String TEST_CASE[] = {
 			"3",
 			"7 4",
 			"2 4 6",
 			"8 5 9 3"
 	};
+	*/
 	
 	private static final String REAL_CASE[] = {
 		"75",

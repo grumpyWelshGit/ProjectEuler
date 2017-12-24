@@ -38,7 +38,6 @@ public class Problem043a implements ProblemDescription<Long> {
 		initialiseMultiples();
 		final int[] digits = new int[10];
 		for (int d17 : multiples.get(17)) {
-			int digitId = 9;
 //			d17=289;
 			Arrays.fill(digits, -1);
 			digits[9] = d17 % 10;

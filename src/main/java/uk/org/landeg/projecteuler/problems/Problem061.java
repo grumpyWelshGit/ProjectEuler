@@ -46,7 +46,6 @@ public class Problem061 implements ProblemDescription<Long>{
 		functions.put(7, x -> 1 * x * (5 * x - 3) / 2);
 		functions.put(8, x -> 1 * x * (3 * x - 2));
 		
-		int t;
 		functions
 			.entrySet()
 			.stream()

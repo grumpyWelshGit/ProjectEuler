@@ -1,10 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -17,7 +15,6 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Order(44)
 @Component
 public class Problem044 implements ProblemDescription<Integer>{
-	private static final Map<Integer, Integer> pentagons = new LinkedHashMap<>();
 	private static final Logger LOG = LoggerFactory.getLogger(Problem044.class);
 
 	@Override

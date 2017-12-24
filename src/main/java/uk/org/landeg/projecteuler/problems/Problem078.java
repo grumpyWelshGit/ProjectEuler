@@ -1,9 +1,5 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.slf4j.Logger;
@@ -11,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import uk.org.landeg.projecteuler.MathLibTest;
-import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component

@@ -22,7 +22,6 @@ public class Problem039A implements ProblemDescription<Integer>{
 	@Override
 	public Integer solve() {
 		int maxp = 0;
-		int maxSolutions = 0;
 		int mMax = (int) Math.sqrt(1000);
 		for (int p = 12 ; p < 1000 ; p++) {
 			for (int m = 2 ; m < mMax ; m++) {

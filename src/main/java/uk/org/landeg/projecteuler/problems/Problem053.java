@@ -3,8 +3,6 @@ package uk.org.landeg.projecteuler.problems;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Component
 @Order(53)
 public class Problem053 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem053.class);
 	@Override
 	public String getTask() {
 		return "How many, not necessarily distinct, values of  nCr, for 1 ≤ n ≤ 100, are greater than one-million?";

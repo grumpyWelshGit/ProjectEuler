@@ -2,8 +2,6 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Component
 @Order(52)
 public class Problem052 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem052.class);
 	@Override
 	public String getTask() {
 		return "It can be seen that the number, 125874, and its double, 251748, contain exactly the same digits, but in a different order.";

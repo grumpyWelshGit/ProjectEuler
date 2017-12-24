@@ -54,7 +54,6 @@ public class Problem033 implements ProblemDescription<Long>{
 	}
 
 	private void reduce (final int[] numbers) {
-		int lcm = 1;
 		int cm = 2;
 		boolean finished = false;
 		do {

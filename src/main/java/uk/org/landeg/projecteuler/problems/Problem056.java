@@ -12,7 +12,6 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Component
 @Order(56)
 public class Problem056 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem056.class);
 	@Override
 	public String getTask() {
 		return "Considering natural numbers of the form, ab, where a, b < 100, what is the maximum digital sum?";

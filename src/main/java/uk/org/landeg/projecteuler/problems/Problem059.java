@@ -43,7 +43,6 @@ public class Problem059 implements ProblemDescription<Long>{
 		final char[] bestKey = new char[3];
 		key[0] = key[1] = key[2] = 'a';
 		
-		int charPos = 0;
 		int score = 0;
 		int maxScore = 0;
 		int decodedScore = 0;

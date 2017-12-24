@@ -1,8 +1,5 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
@@ -50,36 +47,6 @@ public class Problem045 implements ProblemDescription<Long>{
 		return p;
 	}
 
-	private static final Map<Integer, Long> triangles = new HashMap<Integer, Long>();
-	private static final Map<Integer, Long> pentagons = new HashMap<Integer, Long>();
-	private static final Map<Integer, Long> hexagons = new HashMap<Integer, Long>();
-	
-	private long pentagon (final int n) {
-		return addToSequenceCache(n, hexagons, x -> 3l * x * x - (long) x);
-	}
-	
-	private long hexagon (final int n) {
-		return addToSequenceCache(n, hexagons, x -> 4l * x * x - 2l * x);
-
-	}
-	
-	private long triangle (final int n) {
-		return addToSequenceCache(n, triangles, x -> x * (x + 1));
-	}
-	
-	private long addToSequenceCache (
-			final int n,
-			final Map<Integer, Long> map,
-			final SequenceOperator operator) {
-		if (map.containsKey(n)) {
-			return map.get(n);
-		} else {
-			final long s = operator.transform(n);
-			map.put(n, s);
-			return s;
-		}
-	}
-	
 	@FunctionalInterface
 	private static interface SequenceOperator {
 		public long transform (final int n);

@@ -15,7 +15,6 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 @Order(67)
 @Component
 public class Problem067 extends Problem018 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem067.class);
 
 	@Override
 	public String getTask() {

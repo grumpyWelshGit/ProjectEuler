@@ -23,7 +23,6 @@ public class Problem031 implements ProblemDescription<Integer>{
 	public Integer solve() {
 		final int target = 200;
 		final int[] coinsValues = new int[] {200,100,50,20,10,5,2,1};
-		final int coinCount[] = new int [coinsValues.length];
 		final int maxCount [] = new int [coinsValues.length];
 		
 		int combinations = 0;

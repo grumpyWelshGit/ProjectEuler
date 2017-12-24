@@ -1,9 +1,7 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -40,7 +38,6 @@ public class Problem051 implements ProblemDescription<Integer>{
 		final int max = 1000000;
 		Integer result = null;
 		final Set<Integer> primesSet  = PrimeLib.primes(max);
-		final Map<Integer, List<Integer>> primesByRecurring = new HashMap<>();
 		final List<Integer> candidates = new ArrayList<>();
 		for (int prime : primesSet) {
 			final int [] digitFreq = (Mathlib.digitFrequency(prime));

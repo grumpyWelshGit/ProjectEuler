@@ -55,7 +55,6 @@ public class Problem073 implements ProblemDescription<Integer>{
 				}
 			}
 		}
-		final Set<Double> used = new HashSet<>();
 		final double ll = 1d/3d;
 		final double ul = 1d/2d;
 		final int stats[] = new int[4];
@@ -85,10 +84,7 @@ public class Problem073 implements ProblemDescription<Integer>{
 							stats[2]++;
 							LOG.trace("checked proper fraction {}/{}", n,d);
 							count++;
-						} else {
-							stats[3]++;
-							LOG.debug("rejected improper fraction {}/{}", n,d);
-						}
+						} 
 					}
 				}
 			}
@@ -96,7 +92,6 @@ public class Problem073 implements ProblemDescription<Integer>{
 				LOG.info("stats : total {} | improper (skipped) {} | confirmed proper {} | rejected {}", stats[0],stats[1],stats[2], stats[3]);
 			}
 		}
-		int  i = 0;
 		LOG.info("fraction count {}", count);
 		return count;
 	}
@@ -110,56 +105,4 @@ public class Problem073 implements ProblemDescription<Integer>{
 		return true;
 	}
 
-	private static class Fraction{
-		private int n;
-		private int d;
-		
-		
-		public Fraction(int n, int d) {
-			super();
-			this.n = n;
-			this.d = d;
-		}
-		public int getN() {
-			return n;
-		}
-		public void setN(int n) {
-			this.n = n;
-		}
-		public int getD() {
-			return d;
-		}
-		public void setD(int d) {
-			this.d = d;
-		}
-		@Override
-		public String toString() {
-			StringBuilder builder = new StringBuilder();
-			builder.append("Fraction [n=").append(n).append(", d=").append(d).append("]");
-			return builder.toString();
-		}
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + d;
-			result = prime * result + n;
-			return result;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			Fraction other = (Fraction) obj;
-			if (d != other.d)
-				return false;
-			if (n != other.n)
-				return false;
-			return true;
-		}
-	}
 }

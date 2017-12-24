@@ -1,6 +1,5 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -8,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.PrimeLib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
@@ -41,22 +39,7 @@ public class Problem069 implements ProblemDescription<Integer>{
 				break;
 			}
 		}
-		
+		LOG.info("{}", maxPrimeNumber);
 		return maxPrimeNumber;
-	}
-	
-	private int totient (final int n, final Set<Integer> primes) {
-		LOG.debug("Calculating totient {}", n);
-		if (primes.contains(n)) {
-			return n - 1;
-		}
-		final Map<Long,Integer> factors = Mathlib.primeFactors(n, primes);
-		int totient = n;
-		for (Long prime : factors.keySet()) {
-			totient /= prime;
-			totient *= prime - 1;
-		}
-		
-		return totient;
 	}
 }

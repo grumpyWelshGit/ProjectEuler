@@ -41,8 +41,6 @@ public class Problem011 implements ProblemDescription<Long> {
 			{{0,0},{1,1},{2,2},{3,3}},
 			{{0,0},{1,-1},{2,-2},{3,-3}},
 	};
-	@Autowired
-	private ProblemContext context;
 	
 	@Override
 	public String getTask() {

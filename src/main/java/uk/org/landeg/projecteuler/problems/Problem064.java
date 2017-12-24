@@ -31,14 +31,12 @@ public class Problem064 implements ProblemDescription<Integer>{
 	public Integer solve() {
 		int a;
 		int b;
-		int iteration;
 		int oddPeriodCount = 0;
 		List<Integer> convergents = new ArrayList<>();
 		final List<ConvergentSolution> convergentSolutions = new ArrayList<>();
 		
 		int period;
 		for (int root = 2 ; root <= 10000 ; root++) {
-			iteration = 0;
 			period = 0;
 			convergentSolutions.clear();
 			convergents.clear();

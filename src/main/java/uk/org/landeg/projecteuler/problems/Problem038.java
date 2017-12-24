@@ -26,18 +26,15 @@ public class Problem038 implements ProblemDescription<Long>{
 
 	@Override
 	public Long solve() {
-		final int maxn = 987654321 / 2;
 		int maxPandigital = 0;
 		final List<Integer> products = new ArrayList<>();
 		
-		long pandigitalCandidate;
 		final BaseGenerator generator = new BaseGenerator();
 		while (generator.hasNext()) {
 			int base = generator.next();
 			products.clear();
 			int mult = 1;
 			int totalLen = 0;
-			pandigitalCandidate = base;
 			do {
 				int multiple = base * mult;
 				products.add(multiple);

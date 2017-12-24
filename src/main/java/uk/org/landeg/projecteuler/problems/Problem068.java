@@ -48,7 +48,6 @@ public class Problem068 implements ProblemDescription<String>{
 				LOG.debug("Finding candidate solutions for sum {}", entry.getKey());
 				findSolutions(entry.getValue());
 		});
-		final List<String> solutionsAsStrings = new ArrayList<>();
 		SOLUTIONS.stream().forEach(x -> LOG.info("{}", x));
 		final List<String> stringSolutions = new ArrayList<>();
 		SOLUTIONS.stream()	

@@ -2,21 +2,16 @@ package uk.org.landeg.projecteuler.problems;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import uk.org.landeg.projecteuler.Mathlib;
-import uk.org.landeg.projecteuler.ProblemContext;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(4)
 @Component
 public class Problem004 implements ProblemDescription<Integer>{
 	private static final Logger LOG = LoggerFactory.getLogger(Problem003.class);
-
-	@Autowired
-	private ProblemContext context;
 
 	@Override
 	public String getTask() {

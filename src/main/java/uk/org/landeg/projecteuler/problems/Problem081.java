@@ -1,30 +1,15 @@
 package uk.org.landeg.projecteuler.problems;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import org.apache.log4j.PatternLayout;
-import org.hamcrest.core.Is;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.tags.EvalTag;
 
-import uk.org.landeg.projecteuler.ContinuedFraction;
-import uk.org.landeg.projecteuler.Convergent;
-import uk.org.landeg.projecteuler.ConvergentState;
 import uk.org.landeg.projecteuler.FileLoader;
-import uk.org.landeg.projecteuler.MathLibTest;
-import uk.org.landeg.projecteuler.Mathlib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(80)
