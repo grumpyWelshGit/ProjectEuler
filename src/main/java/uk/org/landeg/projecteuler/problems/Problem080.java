@@ -51,16 +51,13 @@ public class Problem080 implements ProblemDescription<Long>{
 			final List<Long> aValues = new ArrayList<>();
 			ConvergentState s = new ConvergentState(i);
 			String lastEval = "";
-//			aValues.add((long) Math.sqrt(i));
 			do {
 				LOG.trace("{}",s);
 				aValues.add(s.getA().longValue());
 				s = ContinuedFraction.evaluateNext(s);
 				Convergent c = ContinuedFraction.evaluate(aValues);
-	//			BigDecimal eval = new BigDecimal(c.getN()).divide(new BigDecimal(c.getD()));
 				LOG.trace("i {} : {}   {}", i, ContinuedFraction.evaluate(aValues)/*, eval.toString()*/);
 				if (aValues.size() > 1) {
-//					BigInteger n = c.getN().subtract(c.getD());
 					BigDecimal eval = new BigDecimal(c.getN()).divide(new BigDecimal(c.getD()), 200, BigDecimal.ROUND_DOWN);
 					if (eval.toString().compareTo(lastEval.toString()) == 0) {
 						converged = true;
@@ -71,14 +68,10 @@ public class Problem080 implements ProblemDescription<Long>{
 				}
 
 			} while (!converged);
-	//		final Matcher m = Pattern.compile("0\\.(\\d{100})\\d*").matcher(lastEval);
-	//		m.find();
-	//		final String decimalPart = m.group(1);
-			final String rootApprox = Integer.toString((int) Math.sqrt(i));
 			final String decimalDigits = lastEval.replace(".", "").substring(0, 100);
 			final int iSum = (int) Mathlib.digitalSum(decimalDigits);
 			sum += iSum;
-			LOG.info("{} sum {}  {}", i, iSum, decimalDigits);
+			LOG.debug("{} sum {}  {}", i, iSum, decimalDigits);
 		}
 		LOG.info("sum {}", sum);
 		return (long) sum;
