@@ -2,7 +2,6 @@ package uk.org.landeg.projecteuler;
 
 import java.math.BigInteger;
 import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -147,5 +146,14 @@ public class MathLibTest {
 	public void assertDigitalSumAsExpected () {
 		Assert.assertEquals(6, Mathlib.digitalSum("1230000"));
 		Assert.assertEquals(0, Mathlib.digitalSum("00000"));
+	}
+	
+	@Test
+	public void assertGcd () {
+	  Assert.assertEquals(1, Mathlib.gcd(5, 7));
+	  Assert.assertEquals(1, Mathlib.gcd(1, 7));
+	  Assert.assertEquals(2, Mathlib.gcd(2, 8));
+	  Assert.assertEquals(3, Mathlib.gcd(6, 9));
+	  Assert.assertEquals(2, Mathlib.gcd(10, 8));
 	}
 }

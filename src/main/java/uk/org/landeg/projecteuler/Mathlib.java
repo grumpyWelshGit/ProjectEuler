@@ -312,4 +312,23 @@ public class Mathlib {
 		}
 		return sum;
 	}
+	
+  public static int gcd(int a, int b) {
+    if (a == b) {
+      return a;
+    }
+    if (a == 1 || b == 1) {
+      return 1;
+    }
+    int lo = Math.min(a, b);
+    int hi = Math.max(a, b);
+    int c = lo;
+    do {
+      if (lo % c == 0 && hi % c == 0) {
+        return c;
+      }
+      c--;
+    } while (c > 0);
+    return 1;
+  }
 }
