@@ -2,11 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import uk.org.landeg.projecteuler.ProblemContext;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component

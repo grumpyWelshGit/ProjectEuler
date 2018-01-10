@@ -26,7 +26,6 @@ public class Problem086 implements ProblemDescription<Integer>{
     int count = 0;
     
     int l = 0;
-    int targetl = 99;
     int targetCount = 1000000;
     do {
       l++;
@@ -39,7 +38,6 @@ public class Problem086 implements ProblemDescription<Integer>{
             int h = wh - w;
             if (l >= w && w >=h) {
               count++;
-//              LOG.debug("l {} w {} h {} count {} total {}", l, w, h, currentCount, count);
             }
           }
         }

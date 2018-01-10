@@ -2,20 +2,14 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 import uk.org.landeg.projecteuler.PrimeLib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(71)
 public class Problem072 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem071.class);
-
 	@Override
 	public String getTask() {
 		return "How many elements would be contained in the set of reduced proper fractions for d ≤ 1,000,000?\n";

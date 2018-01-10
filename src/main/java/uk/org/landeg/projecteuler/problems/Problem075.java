@@ -3,12 +3,10 @@ package uk.org.landeg.projecteuler.problems;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
@@ -27,7 +25,6 @@ public class Problem075 implements ProblemDescription<Integer>{
 	}
 
 	static final int max = 1500000;
-	private Set<Integer> primes;
 	private Set<Triple> triplesUsed = new HashSet<>();
 			
 	@Override

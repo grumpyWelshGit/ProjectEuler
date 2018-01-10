@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 import uk.org.landeg.projecteuler.PrimeLib;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
@@ -28,7 +26,6 @@ public class Problem087 implements ProblemDescription<Integer>{
 		return "The smallest number expressible as the sum of a prime square, prime cube, and prime fourth power is 28";
 	}
 
-	private static final int MAX_TEST = 50;
 	private static final int MAX_PROBLEM = 50000000;
 	private static final int MAX = MAX_PROBLEM;
 	

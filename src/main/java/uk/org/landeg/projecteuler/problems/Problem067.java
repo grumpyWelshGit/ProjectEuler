@@ -3,12 +3,8 @@ package uk.org.landeg.projecteuler.problems;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 import uk.org.landeg.projecteuler.FileLoader;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
