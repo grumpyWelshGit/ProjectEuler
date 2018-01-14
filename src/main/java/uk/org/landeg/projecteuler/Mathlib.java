@@ -158,7 +158,18 @@ public class Mathlib {
 		}
 		return divisors;
 	}
-
+	/*
+	public static Set<Integer> properDivisors2 (final int n, final Collection<Integer> primes) {
+	  final Set<Integer> divisors = new HashSet<>();
+	  divisors.add(1);
+	  if (primes.contains(n)) {
+	    return divisors;
+	  }
+	  for (final int p : primes) {
+	    if (n % )
+	  }
+	}
+*/
 	public static Set<Integer> divisors (final int n, final Collection<Integer> primes) {
 		final Set<Integer> divisors = properDivisors(n, primes);
 		divisors.add(n);

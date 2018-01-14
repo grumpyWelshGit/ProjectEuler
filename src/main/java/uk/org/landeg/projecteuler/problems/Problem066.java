@@ -3,12 +3,10 @@ package uk.org.landeg.projecteuler.problems;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
 import uk.org.landeg.projecteuler.ContinuedFraction;
 import uk.org.landeg.projecteuler.Convergent;
 import uk.org.landeg.projecteuler.ConvergentState;
@@ -29,9 +27,9 @@ public class Problem066 implements ProblemDescription<Integer>{
 				+ "By finding minimal solutions in x for D = {2, 3, 5, 6, 7}, we obtain the following\n"
 				+ "3^2 – 2×2^2 = 1\n"
 				+ "2^2 - 3*1^2 = 1\n"
-				+ "9^2 - 3*4^2 = 1\n"
-				+ "5^2 - 3*2^2 = 1\n"
-				+ "8^2 - 3*3^2 = 1\n\n"
+				+ "9^2 - 5*4^2 = 1\n"
+				+ "5^2 - 6*2^2 = 1\n"
+				+ "8^2 - 7*3^2 = 1\n\n"
 				+ "Hence, by considering minimal solutions in x for D ≤ 7, the largest x is obtained when D=5";
 	}
 

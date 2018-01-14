@@ -22,6 +22,10 @@ public class Problem08xTest {
         Assert.assertEquals(425185, new Problem083().solve().intValue());
     }
     @Test
+    public void assertProblem084Solution () {
+      Assert.assertEquals(101524, new Problem084().solve().intValue());
+    }
+    @Test
     public void assertProblem086Solution () {
       Assert.assertEquals(1818, new Problem086().solve().intValue());
     }
@@ -30,10 +34,15 @@ public class Problem08xTest {
 		Assert.assertEquals(2772, new Problem085().solve().intValue());
 	}
 
-	@Test
-	public void assertProblem087Solution () {
-		Assert.assertEquals(1097343, new Problem087().solve().intValue());
-	}
+    @Test
+    public void assertProblem087Solution () {
+        Assert.assertEquals(1097343, new Problem087().solve().intValue());
+    }
+
+    @Test
+    public void assertProblem088Solution () {
+        Assert.assertEquals(7587457, new Problem088().solve().intValue());
+    }
 	@Test
 	public void assertProblem089Solution () {
 		Assert.assertEquals(743, new Problem089().solve().intValue());
