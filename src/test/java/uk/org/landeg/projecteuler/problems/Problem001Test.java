@@ -1,13 +1,12 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import junit.framework.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-public class Problem001Test {
-	@Test
-	public void assertSolution () {
-		Assert.assertEquals(233168, new Problem001().solve().intValue());
+class Problem001Test {
+  @Test
+  void assertSolution() {
+		assertEquals(233168, new Problem001().solve().intValue());
 	}
 }
