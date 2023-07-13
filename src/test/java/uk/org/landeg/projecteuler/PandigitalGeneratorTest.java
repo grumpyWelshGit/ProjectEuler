@@ -1,11 +1,12 @@
 package uk.org.landeg.projecteuler;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class PandigitalGeneratorTest {
-	@Test
-	public void assertPandigitalCreation () {
+import static org.junit.jupiter.api.Assertions.*;
+
+class PandigitalGeneratorTest {
+  @Test
+  void assertPandigitalCreation() {
 		final PandigitalGenerator generator = new PandigitalGenerator(new int[] {0,1,2,5,4,3});
 		generator.next();
 		generator.next();
@@ -17,22 +18,22 @@ public class PandigitalGeneratorTest {
 		generator.next();
 	}
 	
-	@Test
-	public void assertHasNextTrueOnHasNext () {
+  @Test
+  void assertHasNextTrueOnHasNext() {
 		final PandigitalGenerator generator = new PandigitalGenerator(new int[] {0,1,2,5,4,3});
-		Assert.assertTrue(generator.hasNext());
+		assertTrue(generator.hasNext());
 	}
 
-	@Test
-	public void assertHasNextFalseOnSequenceEnd () {
+  @Test
+  void assertHasNextFalseOnSequenceEnd() {
 		final PandigitalGenerator generator = new PandigitalGenerator(new int[] {5,4,3,2,1});
-		Assert.assertFalse(generator.hasNext());
+		assertFalse(generator.hasNext());
 	}
 	
-	@Test
-	public void assertHasNextTrueOnMidSequence () {
+  @Test
+  void assertHasNextTrueOnMidSequence() {
 		final PandigitalGenerator generator = new PandigitalGenerator(new int[] {1, 9, 8, 7, 6, 5, 4, 3, 2, 0});
-		Assert.assertTrue(generator.hasNext());
+		assertTrue(generator.hasNext());
 		
 	}
 }

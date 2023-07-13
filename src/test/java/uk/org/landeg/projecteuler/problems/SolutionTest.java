@@ -1,7 +1,7 @@
 //package uk.org.landeg.projecteuler.problems;
 //
-//import org.junit.Assert;
-//import org.junit.Test;
+//import static org.junit.jupiter.api.Assertions.assertEquals;
+//import org.junit.jupiter.api.Test;
 //import org.junit.runner.RunWith;
 //import org.mockito.Mock;
 //import org.mockito.Mockito;
@@ -15,7 +15,7 @@
 //
 //@ContextConfiguration(classes=SolutionTest.TestConfiguration.class)
 //@RunWith(SpringJUnit4ClassRunner.class)
-//public class SolutionTest {
+//class SolutionTest {
 //	@Configuration
 //	public static class TestConfiguration {
 //		@Mock
@@ -39,12 +39,12 @@
 //	
 //	@Test
 //	public void AssertSolution001 () {
-//		Assert.assertEquals(233168, new Problem001().solve().intValue());
-//		Assert.assertEquals(4613732, new Problem002().solve().intValue());
-//		Assert.assertEquals(6857, new Problem003().solve().intValue());
-//		Assert.assertEquals(906609, new Problem004().solve().intValue());
-//		Assert.assertEquals(232792560, new Problem005().solve().intValue());
-//		Assert.assertEquals(25164150, new Problem006().solve().intValue());
+//		assertEquals(233168, new Problem001().solve().intValue());
+//		assertEquals(4613732, new Problem002().solve().intValue());
+//		assertEquals(6857, new Problem003().solve().intValue());
+//		assertEquals(906609, new Problem004().solve().intValue());
+//		assertEquals(232792560, new Problem005().solve().intValue());
+//		assertEquals(25164150, new Problem006().solve().intValue());
 //		
 //	}
 //}
