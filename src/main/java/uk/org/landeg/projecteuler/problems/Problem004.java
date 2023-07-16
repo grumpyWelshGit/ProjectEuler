@@ -1,7 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +11,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(4)
 @Component
+@Slf4j
 public class Problem004 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem003.class);
+
 
 	@Override
 	public String getTask() {
@@ -44,7 +46,7 @@ public class Problem004 implements ProblemDescription<Integer>{
 							if (Mathlib.isPalindrome(product)) {
 								if (product > highestPalindrome) {
 									highestPalindrome = product;
-									LOG.debug("a = {}, b = {}", a,b);
+									log.debug("a = {}, b = {}", a,b);
 								}
 							}
 						}

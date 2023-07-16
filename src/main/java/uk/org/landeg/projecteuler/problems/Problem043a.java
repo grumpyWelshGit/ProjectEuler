@@ -6,8 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(43)
 @Component
+@Slf4j
 public class Problem043a implements ProblemDescription<Long> {
-	private static final Logger LOG = LoggerFactory.getLogger(Problem043a.class);
+
 	final Map<Integer,List<Integer>> multiples = new LinkedHashMap<>();
 	
 	@Override
@@ -69,10 +70,10 @@ public class Problem043a implements ProblemDescription<Long> {
 															digits[0] = -1;
 															digits[1] = d2 / 100;
 															completeMissingDigit(digits);
-															LOG.debug("digits used {} ", digits);
-															LOG.debug("candidate {} {} {} {} {} {} {}", d2,d3,d5, d7, d11, d13, d17 );
+															log.debug("digits used {} ", digits);
+															log.debug("candidate {} {} {} {} {} {} {}", d2,d3,d5, d7, d11, d13, d17 );
 															long theNumber = arrayToLong(digits);
-															LOG.info("Discovered {}", theNumber);
+															log.info("Discovered {}", theNumber);
 															result += theNumber;
 														}
 													}
@@ -108,9 +109,9 @@ public class Problem043a implements ProblemDescription<Long> {
 				}
 				multiple += primes[idx];
 			} while (multiple < 1000);
-			LOG.debug("initialised multiples sequence {} {}", primes[idx], multiples.get(primes[idx]));
+			log.debug("initialised multiples sequence {} {}", primes[idx], multiples.get(primes[idx]));
 		}
-		LOG.debug("Initialising number array{}", multiples);
+		log.debug("Initialising number array{}", multiples);
 
 	}
 	

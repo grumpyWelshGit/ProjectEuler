@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(62)
+@Slf4j
 public class Problem062 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem062.class);
+
 
 	@Override
 	public String getTask() {
@@ -50,8 +51,8 @@ public class Problem062 implements ProblemDescription<Long>{
 			else { 
 				if (permutation.size() == 4) {
 					result = permutation.get(0);
-					LOG.debug("possible result {} " , result);
-					LOG.debug("current set {} {}", permutation, cube);
+					log.debug("possible result {} " , result);
+					log.debug("current set {} {}", permutation, cube);
 					break;
 				}
 			}

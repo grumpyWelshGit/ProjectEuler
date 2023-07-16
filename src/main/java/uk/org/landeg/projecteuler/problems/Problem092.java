@@ -2,16 +2,18 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(91)
 @Component
+@Slf4j
 public class Problem092 implements ProblemDescription<Integer>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem092.class);
+
   static final int max = 10000000;
 //  static final int max = 100;
   static int[] squares = {0,1,4,9,16,25,36,49,64,81};
@@ -55,14 +57,14 @@ public class Problem092 implements ProblemDescription<Integer>{
           endNumbers[x.intValue()] = iResult;
         }
       });
-      if (LOG.isDebugEnabled()) {
+      if (log.isDebugEnabled()) {
         if (chain.size() > 1) {
-          LOG.debug("{}->{}    {}",idx, i, chain);
+          log.debug("{}->{}    {}",idx, i, chain);
         }
       }
     }
-    LOG.info("iMax {}", iMax);
-    LOG.info("{}", count);
+    log.info("iMax {}", iMax);
+    log.info("{}", count);
     return count;
   }
   

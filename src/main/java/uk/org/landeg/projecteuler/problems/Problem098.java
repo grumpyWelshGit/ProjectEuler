@@ -8,8 +8,9 @@ import java.util.Map;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
@@ -17,8 +18,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(97)
 @Component
+@Slf4j
 public class Problem098 implements ProblemDescription<Long>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem098.class);
+
   @Override
   public String getTask() {
     return "find all the square anagram word pairs"; 
@@ -54,14 +56,14 @@ public class Problem098 implements ProblemDescription<Long>{
     AtomicInteger longestAnagram = new AtomicInteger();
     anagrams.entrySet().stream()
       .filter(e -> e.getValue().size() > 1)
-      .forEach(x -> LOG.debug("{}  {}", x.getKey(), x.getValue()));
+      .forEach(x -> log.debug("{}  {}", x.getKey(), x.getValue()));
     anagrams.entrySet()
       .stream()
       .filter(e -> e.getValue().size() > 1)
       .forEach(e -> longestAnagram.set(Math.max(e.getKey().length(), longestAnagram.get())));
 
-    LOG.info("Max word length = {}", max);
-    LOG.info("Longest anagram = {}", longestAnagram.get());
+    log.info("Max word length = {}", max);
+    log.info("Longest anagram = {}", longestAnagram.get());
     
     final Map<Integer, TreeSet<Long>> squaresByLength = generateSquaresByLength(longestAnagram.get());
     AtomicLong result = new AtomicLong();
@@ -73,15 +75,15 @@ public class Problem098 implements ProblemDescription<Long>{
         for (int i = 1 ; i < candidates.size() ; i++) {
           for (int j = 0; j < i ; j++) {
             final Map<Integer, Integer> map = generateMap(candidates.get(i), candidates.get(j));
-            LOG.debug("Checking words {} {}", candidates.get(i), candidates.get(j));
+            log.debug("Checking words {} {}", candidates.get(i), candidates.get(j));
             for (long square : squares) {
               if (checkMap(map, candidates.get(i), square)) {
                 final long candidateSquare = applyMap(square, map);
                 if (candidateSquare != square && squares.contains(candidateSquare)) {
-                  LOG.info("match {}->{}  {}->{}", candidates.get(i), candidates.get(j), square, candidateSquare);
+                  log.info("match {}->{}  {}->{}", candidates.get(i), candidates.get(j), square, candidateSquare);
                   Long mm = Math.max(candidateSquare, square);
                   if (mm > result.get()) {
-                    LOG.info("Discovered new maxima {}" , mm);
+                    log.info("Discovered new maxima {}" , mm);
                     result.set(mm);
                   }
                 }
@@ -92,7 +94,7 @@ public class Problem098 implements ProblemDescription<Long>{
       });
 
     
-    LOG.debug("long max {} {}", Long.MAX_VALUE, Math.log10(Long.MAX_VALUE));
+    log.debug("long max {} {}", Long.MAX_VALUE, Math.log10(Long.MAX_VALUE));
     return result.get();
   }
 
@@ -102,7 +104,7 @@ public class Problem098 implements ProblemDescription<Long>{
     char[] charmap = new char['Z'];
     for (int idx = 0 ; idx < digits.length ; idx++) {
       if (charmap[digits[idx]] > 0 && charmap[digits[idx]] != chars[idx]) {
-        LOG.trace("{} {} not compatible", string, square);
+        log.trace("{} {} not compatible", string, square);
         return false;
       }
       charmap[digits[idx]] = chars[idx];
@@ -126,7 +128,7 @@ public class Problem098 implements ProblemDescription<Long>{
       m *= 10;
       m += mDigits[mDigitId];
     }
-    LOG.trace("Applying map {} to {} -> {}", map, source, m);
+    log.trace("Applying map {} to {} -> {}", map, source, m);
     return m;
   }
 
@@ -148,7 +150,7 @@ public class Problem098 implements ProblemDescription<Long>{
     final Map<Integer, TreeSet<Long>> squaresByLength = new HashMap<>();
     int i=1;
     long s;
-    LOG.debug("Generating squares");
+    log.debug("Generating squares");
     do {
       s = (long) i * i;
       final int len = (int) Math.log10(s) + 1;
@@ -165,9 +167,9 @@ public class Problem098 implements ProblemDescription<Long>{
     squaresByLength.entrySet()
       .stream()
       .filter(e->e.getKey() < 5)
-      .forEach(e->LOG.debug("{} -> {}", e.getKey(), e.getValue()));
+      .forEach(e->log.debug("{} -> {}", e.getKey(), e.getValue()));
     
-    LOG.debug("finished Generating squares {} {} {}", i, s, Math.log10(s));
+    log.debug("finished Generating squares {} {} {}", i, s, Math.log10(s));
     return squaresByLength;
   }
 
@@ -188,7 +190,7 @@ public class Problem098 implements ProblemDescription<Long>{
         }
       }
     }
-    LOG.trace("Obtaining mapping strategy {} -> {} : {}", s1,s2, map);
+    log.trace("Obtaining mapping strategy {} -> {} : {}", s1,s2, map);
     return map;
   }
 }

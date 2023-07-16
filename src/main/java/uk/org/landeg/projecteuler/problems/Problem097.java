@@ -1,15 +1,17 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(97)
 @Component
+@Slf4j
 public class Problem097 implements ProblemDescription<Long>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem097.class);
+
   @Override
   public String getTask() {
     return "However, in 2004 there was found a massive non-Mersenne prime which contains 2,357,207 digits: 28433×27830457+1.\n" + 
@@ -36,7 +38,7 @@ public class Problem097 implements ProblemDescription<Long>{
     n *= 28433;
     n += 1;
     final long result = n % 10000000000l;
-    LOG.info("{}",result);
+    log.info("{}",result);
     return result;
   }
 }

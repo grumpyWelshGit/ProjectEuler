@@ -1,7 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(57)
+@Slf4j
 public class Problem057 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem057.class);
+
 	@Override
 	public String getTask() {
 		return "In the first one-thousand expansions, how many fractions contain a numerator with more digits than denominator?";
@@ -39,9 +41,9 @@ public class Problem057 implements ProblemDescription<Integer>{
 			top = tmp;
 			long tt = bot + top;
 			long bb = bot; 
-			LOG.debug("{} / {} -> {}/{}, {} {}", top,bot, tt, bb, (int) Math.log10 (tt), (int) Math.log10 (bb)) ;
+			log.debug("{} / {} -> {}/{}, {} {}", top,bot, tt, bb, (int) Math.log10 (tt), (int) Math.log10 (bb)) ;
 			if ((int) Math.log10(tt) > (int) Math.log10(bb)) {
-				LOG.debug("{} {} / {} -> {}/{}", idx,top,bot, tt, bb);
+				log.debug("{} {} / {} -> {}/{}", idx,top,bot, tt, bb);
 				count++;
 				ratio = (float)idx/(float)count;
 			}

@@ -1,15 +1,17 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(86)
+@Slf4j
 public class Problem086 implements ProblemDescription<Integer>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem086.class);
+
   public static int M = 100;
   @Override
   public String getTask() {
@@ -29,7 +31,7 @@ public class Problem086 implements ProblemDescription<Integer>{
     int targetCount = 1000000;
     do {
       l++;
-      LOG.debug("l = {}", l);
+      log.debug("l = {}", l);
       for (int wh = 1 ; wh < 2 * l ; wh++) {
         int sp2 = wh * wh + l * l;
         double sp = Math.sqrt(sp2);

@@ -6,17 +6,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import uk.org.landeg.projecteuler.ProblemDescription;
 
+@Slf4j
 @Component
 @Order(64)
 public class Problem064 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem064.class);
 	@Override
 	public String getTask() {
 		return "In the first one-thousand expansions, how many fractions contain a numerator with more digits than denominator?";
@@ -53,14 +52,14 @@ public class Problem064 implements ProblemDescription<Integer>{
 				if (convergentSolutions.contains(convergent)) {
 					final int iLastSeen = convergentSolutions.lastIndexOf(convergent);
 					period = convergentSolutions.size() - iLastSeen;
-					LOG.debug("period {} : {}", root, period);
+					log.debug("period {} : {}", root, period);
 					if (period % 2 == 1) {
 						oddPeriodCount++;
 						break;
 					}
 				}
 				convergentSolutions.add(convergent);
-				LOG.trace("next convergent for {} : [{}] {} {}", root, c, a, b);
+				log.trace("next convergent for {} : [{}] {} {}", root, c, a, b);
 				c = a * (c0 -b) / (root - b * b);
 				
 				int n = a;
@@ -80,7 +79,7 @@ public class Problem064 implements ProblemDescription<Integer>{
 				b = -b - d * c; 
 			} while (period == 0);
 			StringBuilder builder = new StringBuilder();
-			if (LOG.isDebugEnabled()) {
+			if (log.isDebugEnabled()) {
 				final AtomicReference<Character> sep = new AtomicReference<Character>();
 				convergents.stream().map(i->Integer.toString(i)).forEach(s -> {
 					if (sep.get() == null) {
@@ -90,11 +89,11 @@ public class Problem064 implements ProblemDescription<Integer>{
 					}
 					builder.append(s);	
 				});
-				LOG.debug("{} : {}", root, builder);
+				log.debug("{} : {}", root, builder);
 			}
 			
 		}
-		LOG.info("oddPeriodCount {} ", oddPeriodCount);
+		log.info("oddPeriodCount {} ", oddPeriodCount);
 		return oddPeriodCount;
 	}
 	

@@ -3,16 +3,18 @@ package uk.org.landeg.projecteuler.problems;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(75)
+@Slf4j
 public class Problem075 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem075.class);
+
 
 	@Override
 	public String getTask() {
@@ -33,7 +35,7 @@ public class Problem075 implements ProblemDescription<Integer>{
 		final int mMax = 1 * (int) Math.sqrt(8l * max) /2;
 		for (int m = 1 ; m <= mMax ; m++) {
 			if (m %  100 == 0) {
-				LOG.info("m {} " , m);
+				log.info("m {} " , m);
 			}
 			int nStart = (m % 2 == 0) ? 1 : 2;
 			int nStep = 2;
@@ -53,7 +55,7 @@ public class Problem075 implements ProblemDescription<Integer>{
 				do {
 					final int pp = k * p;
 					if (pp == 24) {
-						LOG.info("m {} n {} k {} a{} b{} c{}",m,n,k,a,b,c);
+						log.info("m {} n {} k {} a{} b{} c{}",m,n,k,a,b,c);
 					}
 					if (pp < max) {
 						if (triplesUsed.add(new Triple(a*k,b*k,c*k))) {
@@ -67,11 +69,11 @@ public class Problem075 implements ProblemDescription<Integer>{
 			}
 		}
 		for (int i : new int[] {12,24,30,36,40,48}) {
-			LOG.info("{} {} ",i , solutionCount[i]);
+			log.info("{} {} ",i , solutionCount[i]);
 		}
 		
 		final int count = (int) Arrays.stream(solutionCount).filter(x -> x == 1).count();
-		LOG.info("Single solution coujnts {} ", count);
+		log.info("Single solution coujnts {} ", count);
 		return count;
 	}
 	

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +14,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(76)
+@Slf4j
 public class Problem076 implements ProblemDescription<Long>{
 
-	private static final Logger LOG = LoggerFactory.getLogger(Problem076.class);
 	private static final int TARGET = 100;
 	AtomicLong combinationCount = new AtomicLong();
 	final Map<Integer, Integer> partitions = new HashMap<>();
@@ -47,7 +47,7 @@ public class Problem076 implements ProblemDescription<Long>{
 				subPartitions[target][i] = sum;
 			}
 			subPartitions[target][target] = 1;
-			LOG.debug(Arrays.toString(subPartitions[target]));
+			log.debug(Arrays.toString(subPartitions[target]));
 		}
 		int sum = 0;
 		for (int p : subPartitions[100]) {

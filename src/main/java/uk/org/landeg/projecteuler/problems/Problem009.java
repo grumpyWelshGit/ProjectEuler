@@ -22,6 +22,7 @@ public class Problem009 implements ProblemDescription<Integer>{
 
 	@Override
 	public Integer solve() {
+
 		int a = 1,b = 1,c = 1;
 		int a2 , b2, c2;
 		for (c = 1 ; c < 1000; c++) {

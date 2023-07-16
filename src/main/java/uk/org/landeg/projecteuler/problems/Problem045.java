@@ -1,7 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(45)
 @Component
+@Slf4j
 public class Problem045 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem045.class);
+
 	@Override
 	public String getTask() {
 		return "Find the next triangle number that is also pentagonal and hexagonal";
@@ -35,15 +37,15 @@ public class Problem045 implements ProblemDescription<Long>{
 				h = nh * (2 * nh - 1);
 			}
 			if (h == p) {
-				LOG.info("Discovered equality np={} nh={} h={}", np, nh, h);
+				log.info("Discovered equality np={} nh={} h={}", np, nh, h);
 				if (h > 40755) {
-					LOG.info("h exceeds 40755 ({})", h);
+					log.info("h exceeds 40755 ({})", h);
 					break;
 				}
 				p=0;
 			}
 		} while (p != h || p <= 40755);
-		LOG.info("Escacpe conditions, p {} h {}", p, h);
+		log.info("Escacpe conditions, p {} h {}", p, h);
 		return p;
 	}
 

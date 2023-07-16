@@ -1,7 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -9,8 +10,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(71)
+@Slf4j
 public class Problem071 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem071.class);
+
 	
 	@Override
 	public String getTask() {
@@ -36,7 +38,7 @@ public class Problem071 implements ProblemDescription<Integer>{
 			} while ((n+1d)/(double)d < target);
 			double diff = target - ((double)n / (double)d);
 			if (diff > 0 && diff < mindiff) {
-				LOG.debug("{}/{} diff = {}",n,d,diff);
+				log.debug("{}/{} diff = {}",n,d,diff);
 				mindiff = diff;
 				nMinDiff = n;
 			}

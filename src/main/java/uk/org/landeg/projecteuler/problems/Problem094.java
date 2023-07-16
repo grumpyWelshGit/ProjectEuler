@@ -3,8 +3,9 @@ package uk.org.landeg.projecteuler.problems;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ContinuedFraction;
@@ -14,8 +15,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(94)
 @Component
+@Slf4j
 public class Problem094 implements ProblemDescription<Long>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem094.class);
+
   @Override
   public String getTask() {
     return "Find the sum of the perimeters of all almost equilateral triangles with integral side lengths and area and whose perimeters do not exceed one billion (1,000,000,000)."; 
@@ -29,9 +31,9 @@ public class Problem094 implements ProblemDescription<Long>{
   @Override
   public Long solve() {
     int max = 1000000000;
-    LOG.info("THis is a complete bugger because the ratio of a/b at high P causes serious rounding errors.");
-    LOG.info("we can show that the area is of form x^2 - 3y^2 = 1 with x=(3a+-1)/2 and y = h");
-    LOG.info("This is pell's equation (again) with D=-3");
+    log.info("THis is a complete bugger because the ratio of a/b at high P causes serious rounding errors.");
+    log.info("we can show that the area is of form x^2 - 3y^2 = 1 with x=(3a+-1)/2 and y = h");
+    log.info("This is pell's equation (again) with D=-3");
 
     ConvergentState state = new ConvergentState(3);
     final List<Long> convergents = new ArrayList<>();
@@ -66,7 +68,7 @@ public class Problem094 implements ProblemDescription<Long>{
             finished = true;
           }
         }
-        LOG.debug("{} :  {}  : {} {}", state, eval,a,b);
+        log.debug("{} :  {}  : {} {}", state, eval,a,b);
       }
     } while (!finished);
     

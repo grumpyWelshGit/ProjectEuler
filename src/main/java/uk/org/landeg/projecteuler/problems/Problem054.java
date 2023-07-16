@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +17,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(54)
+@Slf4j
 public class Problem054 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem054.class);
+
 	@Override
 	public String getTask() {
 		return "In the card game poker, a hand consists of five cards and are ranked, from lowest to highest";
@@ -97,7 +98,7 @@ public class Problem054 implements ProblemDescription<Integer>{
 				Hand hand = (idx <= 4) ? hand1 : hand2;
 				hand.getCards().add(new Card(cards[idx]));
 			}
-			LOG.debug("{} {}",hand1, hand2);
+			log.debug("{} {}",hand1, hand2);
 			checkHand(hand1);
 			checkHand(hand2);
 			final List<HandWin> wins1 = hand1.getWins();
@@ -203,7 +204,7 @@ public class Problem054 implements ProblemDescription<Integer>{
 		final int rank;
 		final int suit;
 		public Card (final String def) {
-			LOG.trace("creating card from def {}" , def);
+			log.trace("creating card from def {}" , def);
 			this.rank = RANKS.get(def.charAt(0));
 			this.suit = SUITS.get(def.charAt(1));
 		}

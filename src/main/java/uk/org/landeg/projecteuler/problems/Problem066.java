@@ -3,8 +3,9 @@ package uk.org.landeg.projecteuler.problems;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ContinuedFraction;
@@ -14,8 +15,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(66)
+@Slf4j
 public class Problem066 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem066.class);
+
 	@Override
 	public String getTask() {
 		return "Find the value of D ≤ 1000 in minimal solutions of x for which the largest value of x is obtained";
@@ -43,7 +45,7 @@ public class Problem066 implements ProblemDescription<Integer>{
 			if (sqrtN * sqrtN == n) {
 				continue;
 			}
-			LOG.debug("Solving for {}",n);
+			log.debug("Solving for {}",n);
 			final List<Long> convergents = new ArrayList<>();
 			state = new ConvergentState(n);
 			boolean solutionFound = false;
@@ -56,11 +58,11 @@ public class Problem066 implements ProblemDescription<Integer>{
 				final BigInteger nAsLong = BigInteger.valueOf((long) n);
 				if (nc.multiply(nc).subtract(dc.multiply(dc).multiply(nAsLong)).equals(BigInteger.ONE)) {
 					solutionFound = true;
-					LOG.debug("{} :  {}", state, eval);
+					log.debug("{} :  {}", state, eval);
 					if (nc.compareTo(xMax) > 0) {
 						xMax = nc;
 						dMax = n;
-						LOG.info("x maxima found at  d={}, x/y={}/{}", n, xMax,state.getY());
+						log.info("x maxima found at  d={}, x/y={}/{}", n, xMax,state.getY());
 					}
 				}
 			} while (!solutionFound);
@@ -68,7 +70,7 @@ public class Problem066 implements ProblemDescription<Integer>{
 			
 			
 		}
-		LOG.info("dMax found at {} ", dMax);
+		log.info("dMax found at {} ", dMax);
 		return dMax;
 	}
 }

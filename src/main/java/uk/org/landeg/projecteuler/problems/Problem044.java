@@ -5,8 +5,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +14,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(44)
 @Component
+@Slf4j
 public class Problem044 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem044.class);
+
 
 	@Override
 	public String getTask() {
@@ -38,7 +39,7 @@ public class Problem044 implements ProblemDescription<Integer>{
 			if (p > 20000000) {
 				break;
 			}
-			LOG.trace("Adding pentagon number {} {}", n, p);
+			log.trace("Adding pentagon number {} {}", n, p);
 			p2values.add(p);
 			p2ValueList.add(p);
 			n++;

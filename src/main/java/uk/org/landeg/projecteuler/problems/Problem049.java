@@ -2,8 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(49)
 @Component
+@Slf4j
 public class Problem049 implements ProblemDescription<String>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem049.class);
+
 	@Override
 	public String getTask() {
 		return 
@@ -57,7 +58,7 @@ public class Problem049 implements ProblemDescription<String>{
 						if (primes[p3] - primes[p2] == primes[p2] - primes[p1]) {
 							final int[] p3freq = Mathlib.digitFrequency(primes[p3]);
 							if (Arrays.equals(p1freq, p3freq)) {
-								LOG.debug("{} {} {}", primes[p1], primes[p2], primes[p3]);
+								log.debug("{} {} {}", primes[p1], primes[p2], primes[p3]);
 								result = String.format("%d%d%d", primes[p1], primes[p2], primes[p3]);
 							}
 						}

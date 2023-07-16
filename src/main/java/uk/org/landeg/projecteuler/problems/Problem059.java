@@ -1,7 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +11,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(59)
+@Slf4j
 public class Problem059 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem057.class);
+
 
 	@Override
 	public String getTask() {
@@ -68,7 +70,7 @@ public class Problem059 implements ProblemDescription<Long>{
 			if (score > maxScore) {
 				maxScore = score;
 				bestDecodedScore = decodedScore;
-				LOG.trace("attempting key {} : {}", key, new String(decoded));
+				log.trace("attempting key {} : {}", key, new String(decoded));
 				System.arraycopy(key, 0, bestKey, 0, key.length);
 			}
 			

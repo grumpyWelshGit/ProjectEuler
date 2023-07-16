@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +17,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(68)
+@Slf4j
 public class Problem068 implements ProblemDescription<String>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem068.class);
+
 	private static final int N = 5;
 	private static final int N_MAX = N * 2;
 	private static final List<List<Integer>> COMBINATIONS = new ArrayList<>();
@@ -37,7 +38,7 @@ public class Problem068 implements ProblemDescription<String>{
 
 	@Override
 	public String solve() {
-		LOG.debug("{}", COMBINATIONS);
+		log.debug("{}", COMBINATIONS);
 		final int lowerBound = N_MAX + 1 +2;
 		final int upperBound = N_MAX*3 -2 -3;
 		for (int target = lowerBound -1 ; target < upperBound + 1; target++) {
@@ -45,10 +46,10 @@ public class Problem068 implements ProblemDescription<String>{
 		}
 		SUB_PARTITIONS.entrySet().stream()
 			.forEach(entry -> {
-				LOG.debug("Finding candidate solutions for sum {}", entry.getKey());
+				log.debug("Finding candidate solutions for sum {}", entry.getKey());
 				findSolutions(entry.getValue());
 		});
-		SOLUTIONS.stream().forEach(x -> LOG.info("{}", x));
+		SOLUTIONS.stream().forEach(x -> log.info("{}", x));
 		final List<String> stringSolutions = new ArrayList<>();
 		SOLUTIONS.stream()	
 				.forEach(solution-> {
@@ -66,7 +67,7 @@ public class Problem068 implements ProblemDescription<String>{
 	
 
 	private void findSubPartitions(final int target) {
-		LOG.debug("finding partitons for {}", target);
+		log.debug("finding partitons for {}", target);
 		final boolean[] numbers = new boolean[N_MAX+1];
 		Arrays.fill(numbers, true);
 		numbers[0] = false;
@@ -77,7 +78,7 @@ public class Problem068 implements ProblemDescription<String>{
 	private void findSubPartitions(int target, List<Integer> solution, boolean[] numbers) {
 		final int currentSum = solution.stream().mapToInt(x->x).sum();
 		if (currentSum == target && solution.size() == 3) {
-			LOG.trace("Partition solution for {} : {}", target, solution);
+			log.trace("Partition solution for {} : {}", target, solution);
 			List<List<Integer>> candidateSolutions;
 			if (!SUB_PARTITIONS.containsKey(target)) {
 				candidateSolutions = new ArrayList<>();
@@ -115,14 +116,14 @@ public class Problem068 implements ProblemDescription<String>{
 	}
 
 	private void findSolutions (final List<List<Integer>> partitions, final List<List<Integer>> solution) {
-		LOG.trace("Current solution is {}", solution.toString());
+		log.trace("Current solution is {}", solution.toString());
 		
 		if (solution.size() == N) {
 			if (solution.get(solution.size() - 1).get(2).equals(solution.get(0).get(1))) {
 				final List<List<Integer>> newSolution = new ArrayList<>();
 				solution.stream().forEach(partition -> newSolution.add(partition));
 				SOLUTIONS.add(newSolution);
-				LOG.info("solution discovered {}", newSolution);
+				log.info("solution discovered {}", newSolution);
 			}
 			return;
 		}
@@ -142,34 +143,34 @@ public class Problem068 implements ProblemDescription<String>{
 		if (!solution.isEmpty()) {
 			minAllowed = solution.get(0).get(0);
 		}
-		LOG.trace("checking eligability of {}", partition);
+		log.trace("checking eligability of {}", partition);
 		boolean eligable = !solution.contains(partition);
 		eligable &= solution.isEmpty() || partition.get(0) > solution.get(0).get(0);
 		if (!eligable) {
-			LOG.trace("rejecting : outer ring value is less than the minimum allowed");
+			log.trace("rejecting : outer ring value is less than the minimum allowed");
 			return false;
 		}
 		eligable &= !solution.isEmpty() || partition.get(0) <= N_MAX - N + 1; 
 		if (!eligable) {
-			LOG.trace("rejecting : intial outer ring value fails to exceed minimum allowed");
+			log.trace("rejecting : intial outer ring value fails to exceed minimum allowed");
 			return false;
 		}
 		eligable &= partition.get(0) > minAllowed;
 		if (!eligable) {
-			LOG.trace("rejecting : outer ring value is less than initial outer ring");
+			log.trace("rejecting : outer ring value is less than initial outer ring");
 			return false;
 		}
 
 		eligable &= solution.isEmpty() || partition.get(1).intValue() == solution.get(solution.size() - 1).get(2).intValue();
 		if (!eligable) {
-			LOG.trace("rejecting : inner ring values dont match");
+			log.trace("rejecting : inner ring values dont match");
 			return false;
 		}
 		
 		if (eligable) {
 			for (int i = 0 ; i < solution.size() ; i++) {
 				if (solution.get(i).contains(partition.get(0))) {
-					LOG.trace("rejecting : solution component {} already contains {}", i, partition.get(0));
+					log.trace("rejecting : solution component {} already contains {}", i, partition.get(0));
 					return false;
 				}
 			}
@@ -179,7 +180,7 @@ public class Problem068 implements ProblemDescription<String>{
 			for (int j = 0 ; j < partition.size() ; j++) {
 				if (!(solution.size() == N-1 && i==0 && j == 2)) { // prevent ring closure from blocking this
 					if (solution.get(i).contains(partition.get(j))) {
-						LOG.trace("rejecting : solution component {} already contains {}", solution.get(i), partition.get(j));
+						log.trace("rejecting : solution component {} already contains {}", solution.get(i), partition.get(j));
 						return false;
 					}
 					

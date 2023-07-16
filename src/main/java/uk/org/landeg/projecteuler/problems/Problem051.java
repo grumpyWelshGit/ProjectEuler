@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(51)
+@Slf4j
 public class Problem051 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem051.class);
+
 	@Override
 	public String getTask() {
 		return "Find the smallest prime which, by replacing part of the number (not necessarily adjacent digits) with the same digit, is part of an eight prime value family";
@@ -63,7 +64,7 @@ public class Problem051 implements ProblemDescription<Integer>{
 					}
 				}
 				if (hits >= 8) {
-					LOG.debug("{}", candidates);
+					log.debug("{}", candidates);
 					break;
 				}
 			}

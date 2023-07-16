@@ -8,8 +8,8 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +19,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(60)
+@Slf4j
 public class Problem060 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem060.class);
+
 
 	@Override
 	public String getTask() {
@@ -53,12 +54,12 @@ public class Problem060 implements ProblemDescription<Long>{
 
 	@Override
 	public Long solve() {
-		LOG.debug("Generating prime list");
+		log.debug("Generating prime list");
 		allPrimes = PrimeLib.primes(MAX_CANDIDATE);
 		primesList.addAll(allPrimes);
-		LOG.debug("Finished Generating prime list");
+		log.debug("Finished Generating prime list");
 
-		LOG.debug("Segregating primes");
+		log.debug("Segregating primes");
 		primeList1 = primesList
 				.stream()
 				.filter(x -> x != 5)
@@ -69,10 +70,10 @@ public class Problem060 implements ProblemDescription<Long>{
 				.filter(x -> x != 5)
 				.filter(x -> x % 3 == 2)
 				.collect(Collectors.toList());
-		LOG.debug("Finished segregating primes");
+		log.debug("Finished segregating primes");
 
 //		primesList = primeList1;
-		LOG.debug("Generating concatinable list");
+		log.debug("Generating concatinable list");
 		final Map<Integer, List<Integer>> contatinatable = new LinkedHashMap<>();
 		for (int n = 1 ; n < primesList.size() ; n++) {
 			final int prime1 = primesList.get(n);
@@ -85,7 +86,7 @@ public class Problem060 implements ProblemDescription<Long>{
 					break;
 				}
 				if (concatinatesToPrime(prime1, prime2)) {
-					LOG.trace("discovered {} and {} are concatinatable", prime1,prime2);
+					log.trace("discovered {} and {} are concatinatable", prime1,prime2);
 					if (contatinatable.containsKey(prime1)) {
 						contatinatable.get(prime1).add(prime2);
 					}
@@ -104,7 +105,7 @@ public class Problem060 implements ProblemDescription<Long>{
 			.mapToInt(set -> set.stream().reduce(0, Integer::sum))
 			.reduce(Integer::min)
 			.ifPresent(v -> minSumHolder.set(v));
-		LOG.info("Lowest sum set {} " , minSumHolder.get());
+		log.info("Lowest sum set {} " , minSumHolder.get());
 		return (long)minSumHolder.get();
 	}
 
@@ -136,7 +137,7 @@ public class Problem060 implements ProblemDescription<Long>{
 			ArrayList<Integer> arrayList) {
 		boolean continueSearching = false;
 		if (arrayList.size() == TARGET_PRIME_COUNT) {
-			LOG.debug("discovered latest set {} ", arrayList);
+			log.debug("discovered latest set {} ", arrayList);
 			setsDiscovered.add(new ArrayList<>(arrayList));
 			continueSearching = true;
 		}

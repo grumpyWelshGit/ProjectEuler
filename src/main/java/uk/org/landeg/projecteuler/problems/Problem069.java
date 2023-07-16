@@ -2,8 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(69)
+@Slf4j
 public class Problem069 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem069.class);
+
 	
 	@Override
 	public String getTask() {
@@ -39,7 +40,7 @@ public class Problem069 implements ProblemDescription<Integer>{
 				break;
 			}
 		}
-		LOG.info("{}", maxPrimeNumber);
+		log.info("{}", maxPrimeNumber);
 		return maxPrimeNumber;
 	}
 }

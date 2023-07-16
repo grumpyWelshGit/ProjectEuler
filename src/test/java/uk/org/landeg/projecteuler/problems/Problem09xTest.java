@@ -5,8 +5,13 @@ import org.junit.jupiter.api.Test;
 
 class Problem09xTest {
   @Test
+  void assertProblem090Solution() {
+    assertEquals(14l, new Problem090().solve().longValue());
+  }
+
+  @Test
   void assertProblem091Solution() {
-    assertEquals(0l, new Problem091().solve().longValue());
+    assertEquals(14l, new Problem091().solve().longValue());
   }
 
   @Test

@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -18,9 +18,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(79)
+@Slf4j
 public class Problem079 implements ProblemDescription<String>{
 
-	private static final Logger LOG = LoggerFactory.getLogger(Problem076.class);
 	@Override
 	public String getTask() {
 		return "Given that the three characters are always asked for in order, analyse the file so as to determine the shortest possible secret passcode of unknown length";
@@ -50,7 +50,7 @@ public class Problem079 implements ProblemDescription<String>{
 		
 		for (int i = 0 ; i < digitScores.length ; i++) {
 			if (usedDigits.contains(i)) {
-				LOG.info("{} : {}", i, digitScores[i]);
+				log.info("{} : {}", i, digitScores[i]);
 			}
 		}
 		
@@ -72,7 +72,7 @@ public class Problem079 implements ProblemDescription<String>{
 			}
 		}
 		charsAfter.entrySet().stream()
-			.forEach(e -> LOG.info("chars after {} : {}", e.getKey(), e.getValue()));
+			.forEach(e -> log.info("chars after {} : {}", e.getKey(), e.getValue()));
 		final int maxAfter = charsAfter
 				.entrySet()
 				.stream()
