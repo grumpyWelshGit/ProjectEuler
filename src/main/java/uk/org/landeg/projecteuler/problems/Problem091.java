@@ -28,36 +28,51 @@ public class Problem091 implements ProblemDescription<Long>{
 
   @Override
   public Long solve() {
-    int sideLength = 2;
+    int sideLength = 50;
     int count = 0;
     log.info("counting triangles for {}*{} grid", sideLength, sideLength);
-    count += (sideLength) * (sideLength) * 3;
-    
-    for (int x = 1 ; x <= sideLength ; x++) {
-      for (int y = 1 ; y <= sideLength ; y++) {
-        log.debug("checking [{},{}]",x,y);
-        int gcd = gcd(x,y);
-        log.debug("gcd {} {}={}", x,y,gcd);
-        // down direction
-        int countDown = x / (y / gcd);
-        if (x % (y/gcd) == 0) {
-          countDown--;
-          log.debug("removing degenerate triangle");
-        }
-        log.debug("downwards direction count {} ", countDown);
-        int countUp = y / (x / gcd);
-        if (y % (x/gcd) == 0) {
-          log.debug("removing degenerate triangle");
-          countUp--;
-        }
 
-        log.debug("upwards direction count {} ", countUp);
-        count += countDown;
-        count += countUp;
+    for (int x1 = 0 ; x1 <= sideLength ; x1++) {
+      for (int y1 = 0 ; y1 <= sideLength ; y1++) {
+        for (int x2 = 0 ; x2 <= sideLength ; x2++) {
+          for (int y2 = 0 ; y2 <= sideLength ; y2++) {
+            double a = lend(0, 0, x2, y2);
+            double b = lend(x1, y1, 0, 0);
+            double c = lend(x1, y1, x2, y2);
+
+
+            if (a >= c) {
+              double t = c;
+              c = a;
+              a = t;
+            }
+
+            if (b >= c) {
+              double t = c;
+              c = b;
+              b = t;
+            }
+
+            double delta = Math.abs(a * a + b * b - c * c);
+            boolean match = (Math.abs(a * a + b * b - c * c) < 0.001) && (a > 0)&& (b > 0)&& (c > 0);
+
+            if (match) {
+              log.debug("[{},{}] [{},{}] {} {} {} {}    [{}]", x1, y1, x2, y2, a,b,c,match, delta);
+              count++;
+            }
+          }
+        }
       }
     }
-    long pTotal = 0l;
-    log.info("{}", count);
-    return (long)count;
+    return (long)count / 2;
+  }
+
+  private double lend(double x1, double y1, double x2, double y2) {
+    return Math.sqrt((x1 - x2) * (x1 - x2) + (y2 - y1) * (y2 - y1));
+  }
+
+  private int len(double x1, double y1, double x2, double y2) {
+    var accurate = Math.sqrt(Math.abs(x1 - x2) + Math.abs(y2 - y1));
+    return ((int) (accurate + 0.5));
   }
 }

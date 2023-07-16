@@ -6,13 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
+import uk.org.landeg.projecteuler.Permutations;
 import uk.org.landeg.projecteuler.ProblemDescription;
 import uk.org.landeg.projecteuler.RomanNumeral;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
@@ -23,50 +22,59 @@ public class Problem090 implements ProblemDescription<Integer> {
 
   @Override
   public String getTask() {
-    return "Find the number of characters saved by writing each of these in their minimal form";
+    return "How many distinct arrangements of the two cubes allow for all of the square numbers to be displayed?";
   }
 
   @Override
   public String getDescribtion() {
-    return "For a number written in Roman numerals to be considered valid there are basic rules which must be followed";
+    return "Each of the six faces on a cube has a different digit (\n"
+            + " to \n"
+            + ") written on it; the same is done to a second cube. By "
+            + " placing the two cubes side-by-side in different positions we can form a variety of \n"
+            + "-digit numbers.\n"
+            + "\n";
   }
 
   @Override
   public Integer solve() {
-    // 01 04 09 16 25 36 49 64 81
-    // 0 .. 1,4,6
-    // 1 .. 0,6,8
-    // 2 .. 5
-    // 3 .. 6
-    // 4 .. 0, 6
-    // 5 .. 2
-    // 6 .. 0, 3
-    // 7 .. -
-    // 8 .. 1
+    final var numbers = new Integer[]{0,1,2,3,4,5,6,7,8,9};
 
-    // 9 .. 0, 1, 3, 4
+    int count =  0;
+    var context1 = new Permutations.SelectionContext<>(numbers, 6);
 
-    // 1,2,3,4,5,6 -> 0,2,3,5,6,8
-
-    // 0,5,6,7,8,9 -> 1,4,9,2,0,3,1,0,1,3,4  -> 0,1,2,3,4,6
-
-    var die1 = new ArrayList<Byte>();
-    var die2 = new ArrayList<Byte>();
-    var combinations = 0;
-
-    die1.addAll(List.of((byte)0,(byte)1,(byte)2,(byte)3,(byte)4,(byte)5));
-    log.info("die1 : {}", hash(die1));
-    die1.clear();
-    die1.addAll(List.of((byte)0,(byte)1,(byte)2,(byte)3,(byte)4,(byte)6));
-    log.info("die1 : {}", hash(die1));
-    return 0;
+    List<Integer> dice1, dice2;
+    while ((dice1 = Permutations.choose(context1)) != null) {
+      var context2 = new Permutations.SelectionContext<>(context1);
+      while ((dice2 = Permutations.choose(context2)) != null) {
+        if (isValid(dice1, dice2)) {
+            count++;
+            log.debug("{} : {} {}", count, dice1, dice2);
+        }
+      }
+    }
+    return count;
   }
 
-  private int hash (ArrayList<Byte> die) {
-    int hash = 0;
-    for (byte b : die) {
-      hash |= 0x1 << ((int) b);
+  boolean isValid(Collection<Integer> d1, Collection<Integer> d2) {
+    if (!canDisplay(d1, d2, 0, 1)) return false;
+    if (!canDisplay(d1, d2, 0, 4)) return false;
+    if (!canDisplay(d1, d2, 0, 6)) return false; // 9 -> 6
+    if (!canDisplay(d1, d2, 1, 6)) return false;
+    if (!canDisplay(d1, d2, 2, 5)) return false;
+    if (!canDisplay(d1, d2, 3, 6)) return false;
+    if (!canDisplay(d1, d2, 4, 6)) return false; // 49 -> 46
+    if (!canDisplay(d1, d2, 8, 1)) return false;
+    return true;
+  }
+
+  boolean canDisplay(Collection<Integer> d1, Collection<Integer> d2, int t1, int t2) {
+    var valid =
+        (d1.contains(t1) && d2.contains(t2)) ||
+                (d1.contains(t2) && d2.contains(t1));
+    if (t2 == 6) {
+      valid |= (d1.contains(t1) && d2.contains(9)) ||
+              (d1.contains(9) && d2.contains(t1));
     }
-    return hash;
+    return valid;
   }
 }

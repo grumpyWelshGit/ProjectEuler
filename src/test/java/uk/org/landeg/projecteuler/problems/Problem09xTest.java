@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 class Problem09xTest {
   @Test
   void assertProblem090Solution() {
-    assertEquals(14l, new Problem090().solve().longValue());
+    assertEquals(1217, new Problem090().solve().longValue());
   }
 
   @Test
