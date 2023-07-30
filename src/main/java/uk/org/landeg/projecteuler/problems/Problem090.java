@@ -5,14 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import uk.org.landeg.projecteuler.FileLoader;
 import uk.org.landeg.projecteuler.Permutations;
 import uk.org.landeg.projecteuler.ProblemDescription;
-import uk.org.landeg.projecteuler.RomanNumeral;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 @Order(90)
@@ -40,11 +36,11 @@ public class Problem090 implements ProblemDescription<Integer> {
     final var numbers = new Integer[]{0,1,2,3,4,5,6,7,8,9};
 
     int count =  0;
-    var context1 = new Permutations.SelectionContext<>(numbers, 6);
+    var context1 = new Permutations.UniqueSelectionContext<>(numbers, 6);
 
     List<Integer> dice1, dice2;
     while ((dice1 = Permutations.choose(context1)) != null) {
-      var context2 = new Permutations.SelectionContext<>(context1);
+      var context2 = new Permutations.UniqueSelectionContext<>(context1);
       while ((dice2 = Permutations.choose(context2)) != null) {
         if (isValid(dice1, dice2)) {
             count++;

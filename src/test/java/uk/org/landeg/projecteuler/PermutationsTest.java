@@ -16,15 +16,15 @@ class PermutationsTest {
 
 	@Test
 	void chooseHasNextTest() {
-		var selectionContext = new Permutations.SelectionContext<>(List.of(0,1,2,3,4).toArray(), 5);
+		var selectionContext = new Permutations.UniqueSelectionContext<>(List.of(0,1,2,3,4).toArray(), 5);
 		assertFalse(selectionContext.hasNext());
-		selectionContext = new Permutations.SelectionContext<>(List.of(0,1,2,3,4,5).toArray(), 5);
+		selectionContext = new Permutations.UniqueSelectionContext<>(List.of(0,1,2,3,4,5).toArray(), 5);
 		assertTrue(selectionContext.hasNext());
 	}
 
 	@Test
 	void chooseNextTest() {
-		var selectionContext = new Permutations.SelectionContext<>(List.of(0,1,2,3).toArray(), 3);
+		var selectionContext = new Permutations.UniqueSelectionContext<>(List.of(0,1,2,3).toArray(), 3);
 		assertEquals( List.of(0,1,2), choose(selectionContext));
 		assertEquals( List.of(0,1,3), choose(selectionContext));
 		assertEquals( List.of(0,2,3), choose(selectionContext));

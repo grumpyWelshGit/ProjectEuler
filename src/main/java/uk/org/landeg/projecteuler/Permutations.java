@@ -1,8 +1,5 @@
 package uk.org.landeg.projecteuler;
 
-import lombok.Getter;
-
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,14 +58,12 @@ public class Permutations {
 		return lexiographArray;
 	}
 
-
 	/**
 	 * finds the nth lexiographic combination of the specified character array
-	 * @param chars
-	 * @param n
+	 *
 	 * @return
 	 */
-	public static <T> List<T> choose (SelectionContext<T> context) {
+	public static <T> List<T> choose (UniqueSelectionContext<T> context) {
 		if (!context.hasNext()) {
 			return null;
 		}
@@ -80,7 +75,7 @@ public class Permutations {
 		return next;
 	}
 
-	public static class SelectionContext<T> {
+	public static class UniqueSelectionContext<T> {
 		private T[] choices;
 		private int[] selection;
 
@@ -89,14 +84,14 @@ public class Permutations {
 		private boolean first;
 		private int select;
 
-		public SelectionContext(T[] choices, int select) {
+		public UniqueSelectionContext(T[] choices, int select) {
 			this.choices = choices;
 			this.select = select;
 			first = true;
 			initialiseSelection();
 		}
 
-		public SelectionContext(SelectionContext<T> selectionContext) {
+		public UniqueSelectionContext(UniqueSelectionContext<T> selectionContext) {
 			this.choices = selectionContext.choices;
 			this.first = selectionContext.first;
 			this.maxSelections = selectionContext.maxSelections;

@@ -34,7 +34,7 @@ public class Problem096 implements ProblemDescription<Integer>{
     int x = 0;
     for (String line : lines) {
       if (line.startsWith("Grid")) {
-        log.info("Loading {}", line);
+        log.debug("Loading {}", line);
         y = 0;
       } else {
         final char[] numChars = line.toCharArray();
@@ -67,7 +67,7 @@ public class Problem096 implements ProblemDescription<Integer>{
         log.debug("{}" , row);
       }
       int result = game[0][0] * 100 + game[1][0]*10 + game[2][0];
-      log.info("game result {}", result);
+      log.debug("game result {}", result);
       total += result;
       return;
     }
