@@ -2,18 +2,18 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import uk.org.landeg.projecteuler.ProblemDescription;
 
+@Slf4j
 @Component
 @Order(78)
 public class Problem078 implements ProblemDescription<Long>{
 
-	private static final Logger LOG = LoggerFactory.getLogger(Problem078.class);
 	AtomicLong combinationCount = new AtomicLong();
 	
 	@Override
@@ -49,7 +49,7 @@ public class Problem078 implements ProblemDescription<Long>{
 			}
 			partitions[n] = partitions[n] % 1000000;
 		} while (partitions[n] % 1000000 != 0);
-		LOG.info("N={}" ,n);
+		log.info("N={}" ,n);
 		return (long)n;
 	}
 	

@@ -1,13 +1,15 @@
 package uk.org.landeg.projecteuler;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+
+@Slf4j
 public class PandigitalGenerator implements Iterator<int[]>{
-	private static final Logger LOG = LoggerFactory.getLogger(PandigitalGenerator.class);
+
 
 	private int[] digits;
 	private int[] buffer;
@@ -25,8 +27,8 @@ public class PandigitalGenerator implements Iterator<int[]>{
 		for (int idx = low; idx <= hi ; idx++) {
 			digits[idx - low] = idx;
 		}
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("populated digits {} ", Arrays.toString(digits));
+		if (log.isDebugEnabled()) {
+			log.debug("populated digits {} ", Arrays.toString(digits));
 		}
 	}
 
@@ -45,8 +47,8 @@ public class PandigitalGenerator implements Iterator<int[]>{
 
 	@Override
 	public int[] next() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("next {}", Arrays.toString(digits));
+		if (log.isDebugEnabled()) {
+			log.debug("next {}", Arrays.toString(digits));
 		}
 		
 		int i = digits.length - 1;
@@ -54,35 +56,35 @@ public class PandigitalGenerator implements Iterator<int[]>{
 		while (digits[i - 1] > digits[i]) { i--; }
 		i--;
 		while (digits[j] < digits[i]) {j--;}
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("Generating next step i={} j={} ", i, j);
+		if (log.isTraceEnabled()) {
+			log.trace("Generating next step i={} j={} ", i, j);
 		}
 		int tmp = digits[i];
 		digits[i] = digits[j];
 		digits[j] = tmp;
 
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("Swapped digits {} ", Arrays.toString(digits));
+		if (log.isTraceEnabled()) {
+			log.trace("Swapped digits {} ", Arrays.toString(digits));
 		}
 		
 		
 		for (int d = i+1 ; d < digits.length ; d++ ) {
 			buffer[d] = digits[d];
 		}
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("populating buffer {}", Arrays.toString(buffer));
+		if (log.isTraceEnabled()) {
+			log.trace("populating buffer {}", Arrays.toString(buffer));
 		}
 		for (int d = 0 ; d < digits.length - i - 1 ; d++) {
 			digits[i + d + 1] = buffer[buffer.length  - 1 - d]; 
 		}
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("filled from buffer {}", Arrays.toString(buffer));
+		if (log.isTraceEnabled()) {
+			log.trace("filled from buffer {}", Arrays.toString(buffer));
 		}
 
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("next lexiograph digits {} ", Arrays.toString(digits));
+		if (log.isDebugEnabled()) {
+			log.debug("next lexiograph digits {} ", Arrays.toString(digits));
 		}
-		LOG.debug("end next");
+		log.debug("end next");
 		return digits;
 	}
 

@@ -9,16 +9,18 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(84)
 @Component
+@Slf4j
 public class Problem084 implements ProblemDescription<Integer>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem084.class);
+
   @Override
   public String getTask() {
     return "If, instead of using two 6-sided dice, two 4-sided dice are used, find the six-digit modal string.";
@@ -101,7 +103,7 @@ public class Problem084 implements ProblemDescription<Integer>{
       d2 = random.nextInt(dieSides) + 1;
       rollFreq[d1 + d2]++;
       pos = (pos + d1 + d2) % 40;
-      LOG.trace("rolls {}, moving to {}", d1+d2, pos);
+      log.trace("rolls {}, moving to {}", d1+d2, pos);
       if (d1 == d2) {
         doubleCount++;
       } else {
@@ -118,7 +120,7 @@ public class Problem084 implements ProblemDescription<Integer>{
           int newPos = moveInstruction.apply(pos);
           if (newPos != pos) {
             moved = true;
-            LOG.trace("Updating position to {} ", newPos);
+            log.trace("Updating position to {} ", newPos);
           }
           pos = newPos;
         } while (moved);
@@ -126,27 +128,27 @@ public class Problem084 implements ProblemDescription<Integer>{
 
       sqFreq[pos]++;
       if (rolls % 10000 == 0) {
-        LOG.debug("roll #{} {}" , rolls, sqFreq);
+        log.debug("roll #{} {}" , rolls, sqFreq);
       }
     } while (++rolls < target);
-    LOG.info("{}", sqFreq);
+    log.info("{}", sqFreq);
     final Map<Integer, Integer> freqMap = new HashMap<>();
     for (int idx = 0 ; idx < sqFreq.length ; idx++) {
       freqMap.put(sqFreq[idx], idx);
     }
     final List<Entry<Integer, Integer>> entryList = freqMap.
         entrySet().stream().collect(Collectors.toList());
-    LOG.info("{}", rollFreq);
+    log.info("{}", rollFreq);
     entryList.sort((a,b) -> b.getKey().compareTo(a.getKey()));
     for (int order = 0 ; order < 10 ; order++) {
-      LOG.info("{} {}", entryList.get(order), entryList.get(order).getKey() / (double)target);
+      log.info("{} {}", entryList.get(order), entryList.get(order).getKey() / (double)target);
     }
     int answer = 0;
     for (int n = 0 ; n < 3 ; n++) {
       answer*=100;
       answer+= entryList.get(n).getValue();
     }
-    LOG.info("answer {}", answer);
+    log.info("answer {}", answer);
     return answer;
   }
   
@@ -167,7 +169,7 @@ public class Problem084 implements ProblemDescription<Integer>{
       else if (pos < Square.R4.id ) {
         newPos = Square.R4.id;
       }
-      LOG.debug("Moving to next rail {}->{}", pos, newPos);
+      log.debug("Moving to next rail {}->{}", pos, newPos);
       return newPos;
     };
 
@@ -178,7 +180,7 @@ public class Problem084 implements ProblemDescription<Integer>{
       } else if (pos < Square.U2.id) {
         newPos = Square.U2.id;
       }
-      LOG.debug("Moving to next util {}->{}", pos, newPos);
+      log.debug("Moving to next util {}->{}", pos, newPos);
       return newPos;
     }; 
     communityChestCards = new ArrayList<>();
@@ -195,7 +197,7 @@ public class Problem084 implements ProblemDescription<Integer>{
     chanceCards.add(moveToNextRail);
     chanceCards.add(moveToNextRail);
     chanceCards.add(moveToNextUtil);
-    chanceCards.add(pos -> {LOG.debug("Moving back 3 squares");return pos - 3;});
+    chanceCards.add(pos -> {log.debug("Moving back 3 squares");return pos - 3;});
     while (communityChestCards.size() < 16) {
       communityChestCards.add(Function.identity());
     }
@@ -208,7 +210,7 @@ public class Problem084 implements ProblemDescription<Integer>{
     return new Function<Integer, Integer> () {
       @Override
       public Integer apply(Integer t) {
-        LOG.debug("move to square {}" , square.toString());
+        log.debug("move to square {}" , square.toString());
         return square.id;
       }
     };
@@ -219,11 +221,11 @@ public class Problem084 implements ProblemDescription<Integer>{
   Function<Integer, Integer> getMoveInstruction (int pos) {
     Function<Integer, Integer> instruction = x -> x;
     if (pos == Square.CC1.id || pos == Square.CC2.id || pos == Square.CC3.id) {
-      LOG.trace("Draw Chest, card {}", chestCardId);
+      log.trace("Draw Chest, card {}", chestCardId);
       instruction = communityChestCards.get(chestCardId);
       chestCardId = (chestCardId + 1) % communityChestCards.size();
     } else if (pos == Square.CH1.id || pos == Square.CH2.id || pos == Square.CH3.id) {
-      LOG.trace("Draw Chance, card {}", chanceCardId);
+      log.trace("Draw Chance, card {}", chanceCardId);
       instruction = chanceCards.get(chanceCardId);
       chanceCardId = (chanceCardId + 1) % chanceCards.size();
     } else if (pos == Square.GTJ.id) {

@@ -1,7 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +11,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(3)
+@Slf4j
 public class Problem003 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem003.class);
+
 
 	@Override
 	public String getTask() {
@@ -32,7 +34,7 @@ public class Problem003 implements ProblemDescription<Long>{
 		for (int idx = primes.length - 1 ; idx >= 0 ; idx--) {
 			if (primes[idx]) {
 				if (currentValue % idx == 0 && idx > maxFactor) {
-					LOG.debug("factor : {}", idx);
+					log.debug("factor : {}", idx);
 					maxFactor = idx;
 				}
 			}

@@ -2,8 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.math.BigInteger;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +11,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(55)
+@Slf4j
 public class Problem055 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem055.class);
+
 	@Override
 	public String getTask() {
 		return "How many Lychrel numbers are there below ten-thousand?";
@@ -29,22 +30,22 @@ public class Problem055 implements ProblemDescription<Integer>{
 		boolean isLychrel;
 		BigInteger idx = BigInteger.valueOf(1l);
 		do {
-			LOG.debug("testing {}", idx);
+			log.debug("testing {}", idx);
 			isLychrel = true;
 			BigInteger val = idx;
 			for (int it = 0 ; it < 50 ; it++) {
 				val = val.add(new BigInteger(reverse(val.toString())));
-				LOG.trace("current val {} ", val);
+				log.trace("current val {} ", val);
 				if (val.toString().equals(reverse(val.toString()))) {
 					isLychrel = false;
 					break;
 				}
 			}
 			if (isLychrel) {
-				LOG.debug("{} is a Lychrel number");
+				log.debug("{} is a Lychrel number");
 				count++;
 			} else {
-				LOG.debug("{} is NOT a Lychrel number");
+				log.debug("{} is NOT a Lychrel number");
 			}
 			idx = idx.add(BigInteger.ONE);
 		} while (idx.intValue() < 10000);

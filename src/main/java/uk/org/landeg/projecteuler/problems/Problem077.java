@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,9 +14,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(77)
+@Slf4j
 public class Problem077 implements ProblemDescription<Long>{
 
-	private static final Logger LOG = LoggerFactory.getLogger(Problem076.class);
 	private static final int MAX_TARGET = 100;
 	private static final int MAX_SOLUTIONS = 5000;
 	private int count = 0;
@@ -36,7 +36,7 @@ public class Problem077 implements ProblemDescription<Long>{
 		for (int i = 2; i < MAX_TARGET ; i++) {
 			count = 0;
 			solutionSearch(primeList, i);
-			LOG.debug("{} {} ", i, count);
+			log.debug("{} {} ", i, count);
 			if (count > MAX_SOLUTIONS) {
 				result = i;
 				break;
@@ -65,7 +65,7 @@ public class Problem077 implements ProblemDescription<Long>{
 			return;
 		}
 		if (diff == 0) {
-			LOG.trace("{}", solution);
+			log.trace("{}", solution);
 			count++;
 			return;
 		}

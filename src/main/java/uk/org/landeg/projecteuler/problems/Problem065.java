@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +14,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(65)
+@Slf4j
 public class Problem065 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem065.class);
+
 	@Override
 	public String getTask() {
 		return "What is most surprising is that the important mathematical constant,\n" + 
@@ -50,7 +51,7 @@ public class Problem065 implements ProblemDescription<Integer>{
 				n = term.multiply(d).add(n);
 				d = nt;
 			}
-			LOG.debug("{}/{}", n,d);
+			log.debug("{}/{}", n,d);
 		}
 		BigInteger TEN = BigInteger.valueOf(10l);
 		

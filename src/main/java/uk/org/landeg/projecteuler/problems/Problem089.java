@@ -1,8 +1,9 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
@@ -11,8 +12,9 @@ import uk.org.landeg.projecteuler.RomanNumeral;
 
 @Component
 @Order(89)
+@Slf4j
 public class Problem089 implements ProblemDescription<Integer> {
-  private static final Logger LOG = LoggerFactory.getLogger(Problem089.class);
+
 
   @Override
   public String getTask() {
@@ -33,7 +35,7 @@ public class Problem089 implements ProblemDescription<Integer> {
       int eval = RomanNumeral.evaluate(numAsString);
       final String asNumerals = RomanNumeral.toString(eval);
       charsOutRef.set(charsOutRef.get() + asNumerals.length());
-      LOG.debug("{} -> {} ({} {}) ... {} -> {}", 
+      log.debug("{} -> {} ({} {}) ... {} -> {}", 
           numAsString, asNumerals, eval, RomanNumeral.evaluate(asNumerals), 
           numAsString.length(), asNumerals.length());
     });

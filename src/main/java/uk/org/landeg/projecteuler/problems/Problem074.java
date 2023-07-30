@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(74)
+@Slf4j
 public class Problem074 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem074.class);
+
 
 	@Override
 	public String getTask() {
@@ -83,28 +84,28 @@ public class Problem074 implements ProblemDescription<Integer>{
 				chainLengths.put(len / 10, chainLengths.getOrDefault(len / 10, 0) + 1);
 			}
 
-			LOG.trace("{} ({}) : {}", n, len, history);
+			log.trace("{} ({}) : {}", n, len, history);
 			if (len == 60) {
 				count60++;
 			}
 		}
-		if (LOG.isDebugEnabled()) {
+		if (log.isDebugEnabled()) {
 			for (int i = 0 ; i < fullChainLengths.length ; i++) {
 				if (fullChainLengths[i] > 0) {
-					LOG.debug("{}    : {}", i, fullChainLengths[i]);
+					log.debug("{}    : {}", i, fullChainLengths[i]);
 				}
 			}
 		}
-		LOG.info("Numbers with chains of length 60 = {}", count60);
+		log.info("Numbers with chains of length 60 = {}", count60);
 		if (gatherStats) {
 			stats.entrySet().stream()
 				.filter(e -> e.getValue() > 1000)
 				.sorted((b,a) -> a.getValue().compareTo(b.getValue()))
-				.forEach(e -> LOG.info("{}   {}->{}", e.getValue(), e.getKey(), factorialSum(e.getKey())));
-			LOG.info("chain length frequencies");
+				.forEach(e -> log.info("{}   {}->{}", e.getValue(), e.getKey(), factorialSum(e.getKey())));
+			log.info("chain length frequencies");
 			chainLengths.entrySet().stream()
 				.sorted((a,b) -> a.getKey().compareTo(a.getKey()))
-				.forEach(a -> LOG.info("{}  {}", a.getKey() * 10 - a.getKey() * 10 + 9, a.getValue()));
+				.forEach(a -> log.info("{}  {}", a.getKey() * 10 - a.getKey() * 10 + 9, a.getValue()));
 		}
 		return count60;
 	}
@@ -120,7 +121,7 @@ public class Problem074 implements ProblemDescription<Integer>{
 				finished = true;
 			}
 		} while (!finished);
-		LOG.debug("{}", chain);
+		log.debug("{}", chain);
 	}
 	private static final Map<Long,Long> FS_CACHE = new HashMap<>();
 

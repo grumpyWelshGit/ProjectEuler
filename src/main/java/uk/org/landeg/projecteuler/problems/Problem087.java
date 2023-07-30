@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.PrimeLib;
@@ -13,8 +14,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(87)
+@Slf4j
 public class Problem087 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem087.class);
+
 
 	@Override
 	public String getTask() {
@@ -50,10 +52,10 @@ public class Problem087 implements ProblemDescription<Integer>{
 				}
 			}
 		}
-		LOG.debug("{}", squares);
-		LOG.debug("{}", cubes);
-		LOG.debug("{}", quads);
-		LOG.info("{} {} {}", maxSquare*maxSquare, maxCube*maxCube*maxCube, maxQuad*maxQuad*maxQuad*maxQuad);
+		log.debug("{}", squares);
+		log.debug("{}", cubes);
+		log.debug("{}", quads);
+		log.info("{} {} {}", maxSquare*maxSquare, maxCube*maxCube*maxCube, maxQuad*maxQuad*maxQuad*maxQuad);
 		int sum = 0;
 		int count = 0;
 		final Set<Integer> candidates = new HashSet<>();
@@ -68,7 +70,7 @@ public class Problem087 implements ProblemDescription<Integer>{
 						break;
 					}
 					sum = s + c + q;
-					LOG.debug("candidate {}", sum);
+					log.debug("candidate {}", sum);
 					if (candidates.add(sum)) {
 						count++;
 					}

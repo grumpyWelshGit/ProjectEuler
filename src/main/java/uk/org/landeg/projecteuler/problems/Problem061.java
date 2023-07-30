@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(61)
+@Slf4j
 public class Problem061 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem061.class);
+
 
 	@Override
 	public String getTask() {
@@ -83,7 +84,7 @@ public class Problem061 implements ProblemDescription<Long>{
 			int sum = set.stream().mapToInt(PolyNumber::getValue).sum();
 			
 			if (set.get(set.size() - 1).endsWith == set.get(0).startsWith) {
-				LOG.debug("Set discovered [{}] {}", sum, set);
+				log.debug("Set discovered [{}] {}", sum, set);
 				result = sum;
 				return;
 			}

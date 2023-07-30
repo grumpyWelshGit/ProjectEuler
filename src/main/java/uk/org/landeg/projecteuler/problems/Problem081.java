@@ -3,8 +3,9 @@ package uk.org.landeg.projecteuler.problems;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
@@ -12,8 +13,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(81)
 @Component
+@Slf4j
 public class Problem081 implements ProblemDescription<Long> {
-  private static final Logger LOG = LoggerFactory.getLogger(Problem081.class);
+
   private static final int[][] TEST_GRID = {
       {131, 673, 234, 103, 18}, 
       {201, 96, 342, 965, 150},
@@ -69,12 +71,12 @@ public class Problem081 implements ProblemDescription<Long> {
   }
 
   protected void showGrid(final int[][] grid) {
-    if (LOG.isTraceEnabled()) {
-      LOG.trace("--------------------");
+    if (log.isTraceEnabled()) {
+      log.trace("--------------------");
       for (int i = 0; i < grid.length; i++) {
-        LOG.trace(Arrays.toString(grid[i]));
+        log.trace(Arrays.toString(grid[i]));
       }
-      LOG.trace("--------------------");
+      log.trace("--------------------");
     }
   }
 

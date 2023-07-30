@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.Mathlib;
@@ -15,8 +16,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(70)
+@Slf4j
 public class Problem070 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem070.class);
+
 	
 	@Override
 	public String getTask() {
@@ -31,11 +33,11 @@ public class Problem070 implements ProblemDescription<Integer>{
 	
 	@Override
 	public Integer solve() {
-		LOG.info("From observation, phi(n)/n occurs when n = p1*p2, where p1 and p2 are distinct primes");
-		LOG.info("phi(n)= n * PI(1-1/p) for distinct prime factors, p");
-		LOG.info("phi(n)=n * ( (p1-1)/p1 * (p2-1)/p2 ) ");
-		LOG.info("phi(n)=n * (p1p2 - p1 - p2 + 1)/ (p1*p2)");
-		LOG.info("phi(n)= (n - p1 - p2 + 1)");
+		log.info("From observation, phi(n)/n occurs when n = p1*p2, where p1 and p2 are distinct primes");
+		log.info("phi(n)= n * PI(1-1/p) for distinct prime factors, p");
+		log.info("phi(n)=n * ( (p1-1)/p1 * (p2-1)/p2 ) ");
+		log.info("phi(n)=n * (p1p2 - p1 - p2 + 1)/ (p1*p2)");
+		log.info("phi(n)= (n - p1 - p2 + 1)");
 		final AtomicInteger minNRaio = new AtomicInteger(0);
 		final AtomicReference<Double> minRatio = new AtomicReference<>(1000d);
 		final int max = 10000000;
@@ -64,7 +66,7 @@ public class Problem070 implements ProblemDescription<Integer>{
 					if (ratio < minRatio.get()) {
 						minNRaio.set(candidate);
 						minRatio.set(ratio);
-						LOG.info("{} = {}*{} {} {}",candidate, pi,pj,phi,ratio);
+						log.info("{} = {}*{} {} {}",candidate, pi,pj,phi,ratio);
 					}
 				}
 			}

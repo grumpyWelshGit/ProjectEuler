@@ -1,16 +1,18 @@
 package uk.org.landeg.projecteuler;
 
 import java.math.BigDecimal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
-@Order(91)
-@Component
+@Slf4j
+//@Order(91)
+//@Component
 public class Problem091 implements ProblemDescription<Long>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem091.class);
+
   @Override
   public String getTask() {
     return "Given that 0 ≤ x1, y1, x2, y2 ≤ 50, how many right triangles can be formed?\n" + 
@@ -44,7 +46,7 @@ public class Problem091 implements ProblemDescription<Long>{
       if (a > 0 && a == (long) a) {
         p = 3l * n - 2;
         if (p < max) {
-          LOG.debug("{} {} {} {}", m,n,p,pTotal);
+          log.debug("{} {} {} {}", m,n,p,pTotal);
           pTotal += p;
         }
       }
@@ -53,7 +55,7 @@ public class Problem091 implements ProblemDescription<Long>{
       if (a > 0 && a == (long) a) {
         p = 3l * n - 2;
         if (p < max) {
-          LOG.debug("{} {} {} {}", m,n,p,pTotal);
+          log.debug("{} {} {} {}", m,n,p,pTotal);
           pTotal += p;
         }
       }      
@@ -63,13 +65,13 @@ public class Problem091 implements ProblemDescription<Long>{
 //      if (a > 0 && a == (long) a) {
 //        p = 3 * n - 2;
 //        if (p < max) {
-//          LOG.debug("{} {} {} {}", m,n,p,pTotal);
+//          log.debug("{} {} {} {}", m,n,p,pTotal);
 //          pTotal += p;
 //        }
 //      }
       n++;
     } while (3*n-2 < 1000000000);
-    LOG.info("pTotal {}", pTotal);
+    log.info("pTotal {}", pTotal);
     return pTotal;
   }
 //  518408346

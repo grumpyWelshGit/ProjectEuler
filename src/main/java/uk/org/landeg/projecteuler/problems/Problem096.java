@@ -1,8 +1,9 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
@@ -10,8 +11,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(96)
 @Component
+@Slf4j
 public class Problem096 implements ProblemDescription<Integer>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem096.class);
+
   @Override
   public String getTask() {
     return "By solving all fifty puzzles find the sum of the 3-digit numbers found in the top left corner of each solution grid; for example, 483 is the 3-digit number found in the top left corner of the solution grid above"; 
@@ -32,7 +34,7 @@ public class Problem096 implements ProblemDescription<Integer>{
     int x = 0;
     for (String line : lines) {
       if (line.startsWith("Grid")) {
-        LOG.info("Loading {}", line);
+        log.debug("Loading {}", line);
         y = 0;
       } else {
         final char[] numChars = line.toCharArray();
@@ -46,7 +48,7 @@ public class Problem096 implements ProblemDescription<Integer>{
         dosudoku(game);
       }
     }
-    LOG.info("{}", total);
+    log.info("{}", total);
     return total;
   }
 
@@ -56,16 +58,16 @@ public class Problem096 implements ProblemDescription<Integer>{
   
   private void solve (final int [][] game, final int x, final int y) {
     for (int [] row : game) {
-      LOG.trace("{}" , row);
+      log.trace("{}" , row);
     }
-    LOG.trace("solving for {},{}", x,y);
-    LOG.trace("---------------");
+    log.trace("solving for {},{}", x,y);
+    log.trace("---------------");
     if (y >= 9) {
       for (int [] row : game) {
-        LOG.debug("{}" , row);
+        log.debug("{}" , row);
       }
       int result = game[0][0] * 100 + game[1][0]*10 + game[2][0];
-      LOG.info("game result {}", result);
+      log.debug("game result {}", result);
       total += result;
       return;
     }
@@ -89,7 +91,7 @@ public class Problem096 implements ProblemDescription<Integer>{
     boolean isCandidate = true;
       for (int r = 0 ; r < 9 ; r++) {
         if (game[x][r] == candidate || game[r][y] == candidate) {
-          LOG.trace("{} is not a candadate, row/col violation {}", candidate, r);
+          log.trace("{} is not a candadate, row/col violation {}", candidate, r);
           isCandidate = false;
           break;
         }
@@ -100,7 +102,7 @@ public class Problem096 implements ProblemDescription<Integer>{
         int cy = y / 3;
         for (int r = 0 ; r < 9 ; r++) {
           if (game[(cx*3) + (r %3)][(cy * 3) + (r / 3)] == candidate) {
-            LOG.trace("{} is not a candadate, square violation {},{} - {} {}", candidate, cx, cy, (cx*3) + (r %3), (cy * 3) + (r / 3));
+            log.trace("{} is not a candadate, square violation {},{} - {} {}", candidate, cx, cy, (cx*3) + (r %3), (cy * 3) + (r / 3));
             isCandidate = false;
             break;
           }

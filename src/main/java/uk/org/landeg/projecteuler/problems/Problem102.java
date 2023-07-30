@@ -1,6 +1,8 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
@@ -8,6 +10,7 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(102)
 @Component
+@Slf4j
 public class Problem102 implements ProblemDescription<Integer>{
 
   @Override

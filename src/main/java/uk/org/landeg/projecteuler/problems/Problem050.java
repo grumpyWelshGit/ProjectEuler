@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +14,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(50)
+@Slf4j
 public class Problem050 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem050.class);
+
 	@Override
 	public String getTask() {
 		return "Which prime, below one-million, can be written as the sum of the most consecutive primes?";
@@ -53,7 +54,7 @@ public class Problem050 implements ProblemDescription<Integer>{
 					if (primeList.size() > maxCount) {
 						maxSum = sum;
 						maxCount = primeList.size();
-						LOG.debug("prime sum {} : {}", sum, primeList);
+						log.debug("prime sum {} : {}", sum, primeList);
 					}
 				}
 			}

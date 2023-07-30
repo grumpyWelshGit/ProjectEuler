@@ -3,8 +3,9 @@ package uk.org.landeg.projecteuler.problems;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.PrimeLib;
@@ -12,8 +13,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(94)
 @Component
+@Slf4j
 public class Problem095 implements ProblemDescription<Integer>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem095.class);
+
   @Override
   public String getTask() {
     return "Find the smallest member of the longest amicable chain with no element exceeding one million"; 
@@ -35,7 +37,7 @@ public class Problem095 implements ProblemDescription<Integer>{
     final Set<Integer> primes = PrimeLib.primes(max);
     int i;
     
-    LOG.debug("Calculating sum of divisors");
+    log.debug("Calculating sum of divisors");
     for (int n = 1 ; n < max / 2 ; n++) {
       int m = 2;
       int p;
@@ -49,7 +51,7 @@ public class Problem095 implements ProblemDescription<Integer>{
         m++;
       } while (true);
     }
-    LOG.debug("Finished Calculating sum of divisors");
+    log.debug("Finished Calculating sum of divisors");
     for (int n = 4 ; n < max ; n++) {
       i = n;
       chain.clear();
@@ -73,7 +75,7 @@ public class Problem095 implements ProblemDescription<Integer>{
           if (chain.size() > longestChain) {
             longestChain = chain.size();
             result = chain.stream().mapToInt(x->x).min().getAsInt();
-            LOG.debug("{} {} {}", chain.size(), result, chain);
+            log.debug("{} {} {}", chain.size(), result, chain);
           }
         }
       }

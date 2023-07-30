@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(47)
 @Component
+@Slf4j
 public class Problem047 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem045.class);
+
 
 	@Override
 	public String getTask() {
@@ -48,20 +49,20 @@ public class Problem047 implements ProblemDescription<Integer>{
 	final Map<Integer, Integer> primeFactorCache = new HashMap<>();
 	
 	private int getDistinctPrimeFactors (final int n, final Set<Integer> primes) {
-		LOG.debug("Determining factors of {}", n);
+		log.debug("Determining factors of {}", n);
 		if (primeFactorCache.containsKey(n)) {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Cache hit, returning  {}", primeFactorCache.get(n));
+			if (log.isDebugEnabled()) {
+				log.debug("Cache hit, returning  {}", primeFactorCache.get(n));
 			}
 			return primeFactorCache.get(n);
 		}
 		int count = 0;
 //		if (primes.contains(n)) {
-//			LOG.debug("{} is prime, returning 1");
+//			log.debug("{} is prime, returning 1");
 //			count = 1;
 //		} else {
 			int max = n;
-			LOG.debug("Checking primes to a maximum of {}", max);
+			log.debug("Checking primes to a maximum of {}", max);
 			count = Mathlib.primeFactors(n, primes).keySet().size();
 //		}
 		primeFactorCache.put(n, count);

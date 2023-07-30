@@ -2,8 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(58)
+@Slf4j
 public class Problem058 implements ProblemDescription<Long>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem058.class);
+
 
 	@Override
 	public String getTask() {
@@ -33,27 +34,27 @@ public class Problem058 implements ProblemDescription<Long>{
 		long n = 1;
 		long totalCount = 1;
 		long primeCount = 0;
-		LOG.debug("Generating primes...");
+		log.debug("Generating primes...");
 		final Set<Integer> primes = PrimeLib.primes(maxPrime);
-		LOG.debug("{} primes generated ...", primes.size());
+		log.debug("{} primes generated ...", primes.size());
 		do {
 			long n2 = 2 * n;
 			long nsq = (n2 + 1) * (n2 + 1);
 			totalCount += 4;
 			if (isPrime(nsq - n2, primes)) {
 				primeCount++;
-				LOG.trace("diagonal value {} is prime", (nsq - n2));
+				log.trace("diagonal value {} is prime", (nsq - n2));
 			}
 			if (isPrime(nsq - 2 * n2, primes)) {
-				LOG.trace("diagonal value {} is prime", (nsq - 2 * n2));
+				log.trace("diagonal value {} is prime", (nsq - 2 * n2));
 				primeCount++;
 			}
 			if (isPrime(nsq - 3 * n2, primes)) {
-				LOG.trace("diagonal value {} is prime", (nsq - 3 * n2));
+				log.trace("diagonal value {} is prime", (nsq - 3 * n2));
 				primeCount++;
 			}
 			ratio = (float) primeCount / (float) totalCount;
-			LOG.trace("n {} ratio is currently {} ", n, ratio);
+			log.trace("n {} ratio is currently {} ", n, ratio);
 			n++;
 		} while (ratio >= 0.1);
 		return (2 * n -1);

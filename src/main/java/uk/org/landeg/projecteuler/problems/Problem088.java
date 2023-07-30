@@ -1,16 +1,18 @@
 package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(87)
+@Slf4j
 public class Problem088 implements ProblemDescription<Integer> {
-  private static final Logger LOG = LoggerFactory.getLogger(Problem088.class);
+
 
   @Override
   public String getTask() {
@@ -31,19 +33,19 @@ public class Problem088 implements ProblemDescription<Integer> {
   @Override
   public Integer solve() {
     productSum(1, 1, 1, 2);
-    LOG.debug("{}", kMin);
+    log.debug("{}", kMin);
     final int sum = Arrays.stream(kMin).distinct().sum() - kMin[0] - kMin[1];
-    LOG.info("{}", sum);
+    log.info("{}", sum);
     return sum; 
   }
   
   private void productSum (int p, int sum, int count, int start) {
-    LOG.trace("{} {} {} {}", p, sum, count, start);
+    log.trace("{} {} {} {}", p, sum, count, start);
     int k = p - sum + count;
     if (k < kMax) {
       if (kMin[k] == 0 || p < kMin[k]) {
         kMin[k] = p;
-        LOG.debug("setting kMin[{}]={}",k,p);
+        log.debug("setting kMin[{}]={}",k,p);
       }
       for (int i = start ; i <= 2* kMax/p + 1; i++) {
         productSum(p*i, sum+i, count+1, i);

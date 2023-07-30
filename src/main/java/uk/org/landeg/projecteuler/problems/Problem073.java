@@ -2,8 +2,9 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.PrimeLib;
@@ -11,8 +12,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(73)
+@Slf4j
 public class Problem073 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem073.class);
+
 
 	@Override
 	public String getTask() {
@@ -32,7 +34,7 @@ public class Problem073 implements ProblemDescription<Integer>{
 	public Integer solve() {
 		final Set<Integer> primes = PrimeLib.primes(LIMIT);
 		final boolean[][] imProperFractions = new boolean[LIMIT + 1][LIMIT + 1];
-		LOG.info("Selecting proper fractions");
+		log.info("Selecting proper fractions");
 		for (int d = 2; d <= LIMIT / 2 + 1; d++) {
 			for (int n = 1 ; n <= d ; n++) {
 				if (!imProperFractions[d][n]) {
@@ -59,7 +61,7 @@ public class Problem073 implements ProblemDescription<Integer>{
 			Arrays.fill (stats, 0);
 			boolean dPrime = primes.contains(d);
 			if (d%1000 == 0) {
-				LOG.info("{}",d);
+				log.info("{}",d);
 			}
 			for (int n = 1 ; n < d ; n++) {
 				stats[0]++;
@@ -69,26 +71,26 @@ public class Problem073 implements ProblemDescription<Integer>{
 				}
 				if (eval > ll) {
 					if (dPrime) {
-						LOG.trace("prime denominator, assuming proper {}/{}", n,d);
+						log.trace("prime denominator, assuming proper {}/{}", n,d);
 						count++;
 					} else {
 						if (imProperFractions[d][n]) {
 							stats[1]++;
-							LOG.trace("{}/{} flagged as improper - ignoring", n , d);
+							log.trace("{}/{} flagged as improper - ignoring", n , d);
 						}
 						else if (true) {
 							stats[2]++;
-							LOG.trace("checked proper fraction {}/{}", n,d);
+							log.trace("checked proper fraction {}/{}", n,d);
 							count++;
 						} 
 					}
 				}
 			}
 			if (d%1000 == 0) {
-				LOG.info("stats : total {} | improper (skipped) {} | confirmed proper {} | rejected {}", stats[0],stats[1],stats[2], stats[3]);
+				log.info("stats : total {} | improper (skipped) {} | confirmed proper {} | rejected {}", stats[0],stats[1],stats[2], stats[3]);
 			}
 		}
-		LOG.info("fraction count {}", count);
+		log.info("fraction count {}", count);
 		return count;
 	}
 

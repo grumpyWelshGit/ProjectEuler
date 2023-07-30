@@ -2,6 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.PrimeLib;
@@ -9,6 +11,7 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Component
 @Order(71)
+@Slf4j
 public class Problem072 implements ProblemDescription<Long>{
 	@Override
 	public String getTask() {

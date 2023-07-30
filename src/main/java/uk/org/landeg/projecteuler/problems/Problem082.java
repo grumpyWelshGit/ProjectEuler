@@ -5,8 +5,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.FileLoader;
@@ -14,8 +15,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(82)
 @Component
+@Slf4j
 public class Problem082 implements ProblemDescription<Integer> {
-  private static final Logger LOG = LoggerFactory.getLogger(Problem082.class);
+
   private int[][] grid = {
       {131,673,234,103,18},
       {201,96,342,965,150},
@@ -49,7 +51,7 @@ public class Problem082 implements ProblemDescription<Integer> {
       }
       sum = Math.min (sum, rowSum);
     }
-    LOG.info("typical sum {} ", sum);
+    log.info("typical sum {} ", sum);
     AtomicInteger resultReference = new AtomicInteger(sum);
     int minKnownCost = Integer.MAX_VALUE;
     for (int idx = 0 ; idx < grid.length ; idx++) {
@@ -58,21 +60,21 @@ public class Problem082 implements ProblemDescription<Integer> {
       currentNode.cost = currentNode.initialCost;
       unvisitedNodes.remove(currentNode);
       do {
-        LOG.trace("current node : {} ", currentNode);
+        log.trace("current node : {} ", currentNode);
         currentNode.visited = true;
         updateNeighbourCosts(currentNode, nodes);
-        if (LOG.isTraceEnabled()) {
+        if (log.isTraceEnabled()) {
           showGridDebug(nodes);
         }
         unvisitedNodes.sort(NodeCostComparator.INSTANCE);
         currentNode = unvisitedNodes.remove(0);
-        LOG.trace("Moving to node {} ", currentNode);
+        log.trace("Moving to node {} ", currentNode);
         if (currentNode.x == grid.length-1) {
           minKnownCost = Math.min(minKnownCost, currentNode.cost);
         }
       } while (!unvisitedNodes.isEmpty() && currentNode.x < grid.length && currentNode.cost < minKnownCost);
       if (currentNode.cost > minKnownCost) {
-        LOG.info("bailing with {} nodes remaining", unvisitedNodes.size());
+        log.info("bailing with {} nodes remaining", unvisitedNodes.size());
       }
       AtomicInteger currentResult = new AtomicInteger();
       Arrays.stream(nodes[nodes.length - 1]).min(NodeCostComparator.INSTANCE).ifPresent(x ->  currentResult.set(x.cost));
@@ -80,7 +82,7 @@ public class Problem082 implements ProblemDescription<Integer> {
       if (resultReference.get() == currentResult.get()) {
         showGridDebug(nodes);
       }
-      LOG.info("{} {} {}",idx, currentResult.get(), resultReference.get());
+      log.info("{} {} {}",idx, currentResult.get(), resultReference.get());
     }
     showGrid(nodes);
     return resultReference.get();
@@ -98,13 +100,13 @@ public class Problem082 implements ProblemDescription<Integer> {
           builder.append("*").append(",");
         }
       }
-      LOG.debug("{}", builder.toString());
+      log.debug("{}", builder.toString());
     }
     
   }
   
   private void showGridDebug(Node[][] nodes2) {
-    if (LOG.isDebugEnabled()) {
+    if (log.isDebugEnabled()) {
       showGrid(nodes2);
     }
   }

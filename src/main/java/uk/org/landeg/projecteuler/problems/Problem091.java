@@ -1,15 +1,19 @@
 package uk.org.landeg.projecteuler.problems;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import uk.org.landeg.projecteuler.ProblemDescription;
 
+import static uk.org.landeg.projecteuler.Mathlib.gcd;
+
 @Order(91)
 @Component
+@Slf4j
 public class Problem091 implements ProblemDescription<Long>{
-  private static final Logger LOG = LoggerFactory.getLogger(Problem091.class);
+
   @Override
   public String getTask() {
     return "Given that 0 ≤ x1, y1, x2, y2 ≤ 50, how many right triangles can be formed?\n" + 
@@ -26,54 +30,49 @@ public class Problem091 implements ProblemDescription<Long>{
   public Long solve() {
     int sideLength = 50;
     int count = 0;
-    LOG.info("counting triangles for {}*{} grid", sideLength, sideLength);
-    count += (sideLength) * (sideLength) * 3;
-    
-    for (int x = 1 ; x <= sideLength ; x++) {
-      for (int y = 1 ; y <= sideLength ; y++) {
-        LOG.debug("checking [{},{}]",x,y);
-        int gcd = gcd(x,y);
-        LOG.debug("gcd {} {}={}", x,y,gcd);
-        // down direction
-        int countDown = x / (y / gcd);
-        if (x % (y/gcd) == 0) {
-          countDown--;
-          LOG.debug("removing degenerate triangle");
-        }
-        LOG.debug("downwards direction count {} ", countDown);
-        int countUp = y / (x / gcd);
-        if (y % (x/gcd) == 0) {
-          LOG.debug("removing degenerate triangle");
-          countUp--;
-        }
+    log.info("counting triangles for {}*{} grid", sideLength, sideLength);
 
-        LOG.debug("upwards direction count {} ", countUp);
-        count += countDown;
-        count += countUp;
+    for (int x1 = 0 ; x1 <= sideLength ; x1++) {
+      for (int y1 = 0 ; y1 <= sideLength ; y1++) {
+        for (int x2 = 0 ; x2 <= sideLength ; x2++) {
+          for (int y2 = 0 ; y2 <= sideLength ; y2++) {
+            double a = lend(0, 0, x2, y2);
+            double b = lend(x1, y1, 0, 0);
+            double c = lend(x1, y1, x2, y2);
+
+
+            if (a >= c) {
+              double t = c;
+              c = a;
+              a = t;
+            }
+
+            if (b >= c) {
+              double t = c;
+              c = b;
+              b = t;
+            }
+
+            double delta = Math.abs(a * a + b * b - c * c);
+            boolean match = (Math.abs(a * a + b * b - c * c) < 0.001) && (a > 0)&& (b > 0)&& (c > 0);
+
+            if (match) {
+              log.debug("[{},{}] [{},{}] {} {} {} {}    [{}]", x1, y1, x2, y2, a,b,c,match, delta);
+              count++;
+            }
+          }
+        }
       }
     }
-    long pTotal = 0l;
-    LOG.info("{}", count);
-    return (long)count;
+    return (long)count / 2;
   }
 
-  private int gcd(int x, int y) {
-    if (x == 0 || y == 0) {
-      return 0;
-    }
-    if (x == 1 || y == 1) {
-      return 1;
-    }
-    if (x == y) {
-      return x;
-    }
-    int min = Math.min(x, y);
-    int max = Math.max(x, y);
-    for (int i = min ; i >= 1 ; i--) {
-      if (min % i == 0 && max % i == 0) {
-        return i;
-      }
-    }
-    return 0;
+  private double lend(double x1, double y1, double x2, double y2) {
+    return Math.sqrt((x1 - x2) * (x1 - x2) + (y2 - y1) * (y2 - y1));
+  }
+
+  private int len(double x1, double y1, double x2, double y2) {
+    var accurate = Math.sqrt(Math.abs(x1 - x2) + Math.abs(y2 - y1));
+    return ((int) (accurate + 0.5));
   }
 }

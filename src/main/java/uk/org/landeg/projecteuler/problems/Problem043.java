@@ -2,8 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +12,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(43)
 @Component
+@Slf4j
 public class Problem043 implements ProblemDescription<Long> {
-	private static final Logger LOG = LoggerFactory.getLogger(Problem043.class);
+
 	
 	@Override
 	public String getTask() {
@@ -33,8 +34,8 @@ public class Problem043 implements ProblemDescription<Long> {
 		while (generator.hasNext()) {
 			final int[] digits = generator.next();
 			
-			if (LOG.isDebugEnabled()) {
-				LOG.trace("checking {}", Arrays.toString(digits));
+			if (log.isDebugEnabled()) {
+				log.trace("checking {}", Arrays.toString(digits));
 			}
 			if (digits[3] % 2 == 0) {
 				if ((digits[2] + digits[3] + digits[4]) % 3 == 0) {

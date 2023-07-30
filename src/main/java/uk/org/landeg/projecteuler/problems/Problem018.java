@@ -2,8 +2,8 @@ package uk.org.landeg.projecteuler.problems;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -11,8 +11,9 @@ import uk.org.landeg.projecteuler.ProblemDescription;
 
 @Order(18)
 @Component
+@Slf4j
 public class Problem018 implements ProblemDescription<Integer>{
-	private static final Logger LOG = LoggerFactory.getLogger(Problem018.class);
+
 
 	/**
 	private static final String TEST_CASE[] = {
@@ -59,8 +60,8 @@ public class Problem018 implements ProblemDescription<Integer>{
 	public Integer solve() {
 		numbers = parseNumbers();
 		for (int[] line : numbers) {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug((Arrays.toString(line)));
+			if (log.isDebugEnabled()) {
+				log.debug((Arrays.toString(line)));
 			}
 		}
 		for (int lineId = numbers.length - 2 ; lineId >= 0 ; lineId--) {
@@ -68,8 +69,8 @@ public class Problem018 implements ProblemDescription<Integer>{
 				numbers[lineId][numberId] += Math.max(numbers[lineId + 1][numberId], numbers[lineId + 1][numberId + 1]);
 			}
 			for (int lineId2 = 0 ; lineId2 < numbers.length ; lineId2++) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug(Arrays.toString(numbers[lineId2]));
+				if (log.isDebugEnabled()) {
+					log.debug(Arrays.toString(numbers[lineId2]));
 				}				
 				
 			}
